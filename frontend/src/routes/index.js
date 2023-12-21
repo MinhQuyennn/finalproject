@@ -2,9 +2,12 @@ import Login from '../component/Page/Login';
 import ManagerPage from '../component/Page/ManagerPage/ManagerPage';
 import EmployeePage from '../component/Page/EmployeePage/EmployeePage';
 import CustomerPage from '../component/Page/CustomerPage/CustomerPage';
+import Signup from '../component/Page/Signup';
 
 export const publicRoutes = [
-  { path: '/', element: <Login /> }
+  { path: '/', element: <Login /> },
+  { path: '/signup', element: <Signup /> }
+
 ];
 
 export const CustomerRoutes = [
