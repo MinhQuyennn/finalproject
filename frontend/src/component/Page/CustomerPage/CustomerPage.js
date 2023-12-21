@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-
-
+import style from './style.css';
 
 
 function CustomerPage() {
  
   return (
-    <section className="hero">
-    <div>CustomerPage</div>
-    </section>
+    <div>hi</div>
+
   );
 }
 

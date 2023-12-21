@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { publicRoutes, ManagerRoutes, EmployeeRoutes, CustomerRoutes } from './routes/index';
 
-import Login from './component/Page/Login';
 // import Footer from './component/Footer';
-// import Header from './component/Header';
-// import Loader from './component/Loader/Loader';
+import Header from './component/Header';
+import Loader from './component/Loader/Loader';
 
 
 const App = () => {
@@ -25,28 +24,27 @@ const App = () => {
     };
 
     fetchData();
-
-    // Check tokens in local storage
-    const tokenManager = localStorage.getItem('token-manager');
-    const tokenEmployee = localStorage.getItem('token-employee');
-    const tokenUser = localStorage.getItem('token-user');
-
-    setIsManager(!!tokenManager);
-    setIsEmployee(!!tokenEmployee);
-    setIsCustomer(!!tokenUser);
-
+    const currentRole = localStorage.getItem('currentRole');
+    if (currentRole === 'manager') {
+      setIsManager(true);
+    } else if (currentRole === 'employee') {
+      setIsEmployee(true);
+    } else if (currentRole === 'customer') {
+      setIsCustomer(true);
+    }
 
   }, []);
 
 
-  // if (loading) {
-  //   return <Loader />;
-  // }
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Router>
       <div className='App'>
-        {/* <Header /> */}
+        
+        <Header />
         <Routes>
           {publicRoutes.map((route) => (
             <Route

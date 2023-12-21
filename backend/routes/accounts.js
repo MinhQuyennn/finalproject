@@ -7,7 +7,6 @@ const accountController = require('../controller/accountController')
 //demo 1 
 accountRouter.get("/getAccount" , accountController.getAccount);
 accountRouter.get("/getByID/:id" , accountController.getByID);
-accountRouter.get("/getFullNameByID/:id" , accountController.getFullNameByID);
 accountRouter.get("/getaccountByID/:id" , accountController.getaccountByID);
 accountRouter.put("/updateaccountID/:id" , accountController.updateaccountID);
 

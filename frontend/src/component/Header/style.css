@@ -288,8 +288,16 @@ section{
 
 .top-btnn{
     position: relative;
+    display: flex;
 }
 
 .overlay{
     position: absolute;
 }
+
+.logout img {
+    width: 20px; /* Adjust the width to your preference */
+    height: auto; /* Maintain aspect ratio */
+    cursor: pointer; /* Add cursor pointer on hover if desired */
+    margin-left: 15px;
+  }

@@ -1,6 +1,10 @@
 const express = require("express");
 const accountRoutes = require("./routes/accounts");
 const authRoutes = require("./routes/auth");
+const customerRoutes =require("./routes/customer");
+const managerRoutes =require("./routes/manager")
+const employeeRoutes =require("./routes/employee");
+
 
 const cors = require('cors');
 
@@ -24,6 +28,9 @@ configViewEngine(app)
 // define all our routes
 app.use("/", accountRoutes);
 app.use("/", authRoutes);
+app.use("/", customerRoutes);
+app.use("/", managerRoutes);
+app.use("/", employeeRoutes);
 
 
 

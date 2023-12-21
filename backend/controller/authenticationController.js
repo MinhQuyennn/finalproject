@@ -30,7 +30,7 @@ const login = async (req, res, next) => {
   
       if(password === account.password){
         const payload = {
-            id: account.id,
+            id: account.account_id,
             email: account.email,
             role: account.role,
           };
@@ -41,14 +41,22 @@ const login = async (req, res, next) => {
             process.env.JWT_SECRET_KEY,
             { expiresIn: 3155 },
             (err, token) => {
+              if (err) {
+                return res.status(500).json({
+                  status: "failed",
+                  error: "Error signing the token",
+                });
+              }
+              // Include the account ID in the response
               res.json({
-                status: "success",
+                status: "successe",
                 token: token,
                 role: account.role,
-                id: account.id,
+                id: account.account_id,
               });
             }
           );
+          
       }
         
       });

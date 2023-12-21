@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import classNames from 'classnames/bind';
 import styles from './style.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -28,22 +27,39 @@ function Login() {
   
       if (response.ok) {
         const data = await response.json();
+        console.log('Response data:', data);
+
         const { token, role: userRole, id: accountId } = data;
-  
+        console.log('Account ID:', accountId);
+
         // Store token, role, and account ID in local storage
         localStorage.setItem('accountID', accountId);
+        console.log('After setting accountID:', localStorage.getItem('accountID'));
+
         localStorage.setItem('currentRole', userRole);
   
         // Navigate based on the retrieved role from local storage
         if (userRole === 'customer') {
           navigate('/home');
           localStorage.setItem('token-customer', token);
+          console.log("Day la token-user" ,localStorage.getItem('token-user'));
+          window.location.reload();
+
+
         } else if (userRole === 'manager') {
           localStorage.setItem('token-manager', token);
           navigate('/homepageManager');
+          console.log("Day la token-manager" ,localStorage.getItem('token-manager'));
+          window.location.reload();
+
+
         } else if (userRole === 'employee') {
           localStorage.setItem('token-employee', token);
           navigate('/hompageEmployee');
+          console.log("Day la token-employee" , localStorage.getItem('token-employee'));
+          window.location.reload();
+
+
         }
         
 
@@ -56,9 +72,6 @@ function Login() {
     }
   };
 
-  console.log("Day la token-employee" , localStorage.getItem('token-employee'));
-  console.log("Day la token-manager" ,localStorage.getItem('token-manager'));
-  console.log("Day la token-user" ,localStorage.getItem('token-user'));
 
   return (
     <section className="hero">

@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import classNames from 'classnames/bind';
-import styles from './Header.module.scss';
+import styles from './style.css';
 import { Link } from 'react-router-dom';
-
-const cx = classNames.bind(styles);
+import logout from '../../assets/img/icons8-logout-100.png';
 
 function Header() {
-  const pathBackEnd = "http://localhost:8081";
   const [isSticky, setSticky] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [fullName, setFullName] = useState(false);
   const [isUserDialogOpen, setUserDialogOpen] = useState(false);
-
+  
   const handleMenuClick = () => {
     setMenuOpen(!isMenuOpen);
   };
@@ -24,30 +21,76 @@ function Header() {
     setUserDialogOpen(false);
   };
 
+  const handleLogout = () => {
+    // Perform logout actions here
+    // For example, clear local storage and navigate to '/'
+    localStorage.removeItem('accountID');
+    localStorage.removeItem('currentRole');
+    window.location.href = '/'; // Redirect to the home page after logout
+  };
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
-        handleUserDialogClose();
+      handleUserDialogClose();
     }
-};
+  };
 
   useEffect(() => {
-    // Fetch the user's full name from the server based on the account ID
     const fetchFullName = async () => {
       try {
         const accountID = localStorage.getItem('accountID');
-        const response = await fetch(`http://localhost:8081/getFullNameByID/${accountID}`);
+        console.log('accountIDheader:', accountID);
+    
+        const currentRole = localStorage.getItem('currentRole');
+        let endpoint = "";
+    
+        // Determine the API endpoint based on the user's role
+        if (currentRole === 'customer') {
+          endpoint = `/getFullNameByIDCustomer/${accountID}`;
+        } else if (currentRole === 'manager') {
+          endpoint = `/getFullNameByIDManager/${accountID}`;
+        } else if (currentRole === 'employee') {
+          endpoint = `/getFullNameByIDEmployee/${accountID}`;
+        }
+    
+        const response = await fetch(`http://localhost:8081${endpoint}`);
+    
         if (response.ok) {
           const data = await response.json();
-          console.log(data)
-          setFullName(data.Account[0].full_name);
+    
+          // Log the entire response and data
+          console.log('Response:', response);
+          console.log('Data:', data);
+    
+          // Check if data.Manager exists and is not empty
+          if (data.Manager && data.Manager.length > 0) {
+            setFullName(data.Manager[0].fullname); // Use 'fullname' instead of 'full_name'
+          } 
+          else if (data.Employee && data.Employee.length > 0) {
+            setFullName(data.Employee[0].fullname); // Use 'fullname' instead of 'full_name'
+          }
+          else if (data.Customer && data.Customer.length > 0) {
+            setFullName(data.Customer[0].fullname); // Use 'fullname' instead of 'full_name'
+          }
+          
+          else {
+            console.warn('Full name not found for the user.');
+          }
+        } else {
+          console.error('Failed to fetch full name:', response.statusText);
         }
       } catch (error) {
         console.error('Error fetching full name:', error);
       }
     };
+    
+
     fetchFullName();
-  }, []);
+}, []);
+
+
+
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,97 +102,128 @@ function Header() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-    
+
   }, []);
 
-  useEffect(() => {
-    const handleDocumentClick = (event) => {
-      const dialog = document.querySelector('.dialog');
-    
-      if (isUserDialogOpen && dialog && !dialog.contains(event.target)) {
-        // Clicked outside the open dialog, close it
-        handleUserDialogClose();
-      }
-    };
 
-    document.addEventListener('click', handleDocumentClick);
 
-    return () => {
-      document.removeEventListener('click', handleDocumentClick);
-    };
-  }, []);
-
-  if (localStorage.getItem("currentRole") === 'user') {
+  if (localStorage.getItem("currentRole") === 'customer') {
     return (
-      <header className={cx('header', { sticky: isSticky })}>
-        <Link to="/home" className={cx('logo')}>
-                  Code<span>Xplore</span>
+      <header className={`header ${isSticky ? 'sticky' : ''}`}>
+        <Link to="/home" className="logo">
+          Train<span>Booking</span>
         </Link>
-      
 
-        <ul className={cx('navlist', { active: isMenuOpen })}>
-          <li><a href="#">Home</a></li>
+        <ul className={`navlist ${isMenuOpen ? 'active' : ''}`}>
           <li>
-            <a href="#about">About</a>
-
-            </li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-
-        <span className={cx('top-btnn')} onClick={handleUserIconClick}>
-          <div className='accountName'>{fullName}</div>
-        </span>
-
-      </header>
-    )
-  }
-  else if (localStorage.getItem("currentRole") === 'admin') {
-    return (
-      <header className={cx('header', { sticky: isSticky })}>
-        <Link to="/homeAd" className={cx('logo')}>
-        Code<span>Xplore</span>
-        </Link>
-      
-
-        <ul className={cx('navlist', { active: isMenuOpen })}>
-          <li>
-            <Link to="/homeAd">
+            <Link to="/home">
               Home
             </Link>
           </li>
           <li>
-            <Link to="/homeAd/viewUser">
-              View User
-            </Link></li>
+            <Link to="/home/viewBooking">
+              View Booking
+            </Link>
+          </li>
           <li>
-            <Link to="/homeAd/viewBooking">
-             View Booking
+            <Link to="/home/viewProfile">
+              View Profile
+            </Link>
+          </li>
+          <li>
+            <Link to="/home/contactUs">
+              Contact Us
             </Link>
           </li>
         </ul>
 
-        <span className={cx('top-btnn')} onClick={handleUserIconClick}>
+        <div className="top-btnn" >
           <div className='accountName'>{fullName}</div>
-        </span>
+          <div className='logout' onClick={handleLogout}><img src={logout}></img></div>
+        </div>
+      </header>
+    )
+  } else if (localStorage.getItem("currentRole") === 'manager') {
+    return (
+      <header className={`header ${isSticky ? 'sticky' : ''}`}>
+        <Link to="/homeAd" className="logo">
+          Train<span>Booking</span>
+        </Link>
 
+        <ul className={`navlist ${isMenuOpen ? 'active' : ''}`}>
+          <li>
+            <Link to="/homepageManager">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/homepageManager/viewBooking">
+              View Booking
+            </Link>
+          </li>
+          <li>
+            <Link to="/homepageManager/viewUser">
+              View User
+            </Link>
+          </li>
+          <li>
+            <Link to="/homepageManager/viewEmployee">
+              View Employee
+            </Link>
+          </li>
+        </ul>
+
+        <div className="top-btnn" >
+          <div className='accountName'>{fullName}</div>
+          <div className='logout' onClick={handleLogout}><img src={logout}></img></div>
+        </div>
       </header>
 
     )
-  }
-  else {
+  } else if (localStorage.getItem("currentRole") === 'employee') {
     return (
-      <header className={cx('header', { sticky: isSticky })}>
-              <Link to="/home" className={cx('logo')}>
-                    Code<span>Xplore</span>
+      <header className={`header ${isSticky ? 'sticky' : ''}`}>
+        <Link to="/homepageEmployee" className="logo">
+          Train<span>Booking</span>
+        </Link>
+
+        <ul className={`navlist ${isMenuOpen ? 'active' : ''}`}>
+          <li>
+            <Link to="/homepageEmployee/Train">
+            Flight
             </Link>
-            <Link to ="/">
-        <div
-          className={cx('bx', 'bx-menu')}
-          id="menu-icon"
-        >       
+          </li>
+          <li>
+            <Link to="/homepageEmployee/viewBooking">
+              View Booking
+            </Link>
+          </li>
+          <li>
+            <Link to="/homepageEmployee/viewUser">
+              View User
+            </Link>
+          </li>
+        </ul>
+
+        <div className="top-btnn" >
+          <div className='accountName'>{fullName}</div>
+          <div className='logout' onClick={handleLogout}><img src={logout}></img></div>
         </div>
+      </header>
+
+    )
+  } else {
+    return (
+      <header className={`header ${isSticky ? 'sticky' : ''}`}>
+        <Link to="/home" className="logo">
+          Train<span>Booking</span>
+        </Link>
+        <Link to="/">
+          <div
+            className="bx bx-menu"
+            id="menu-icon"
+          >
+          </div>
         </Link>
       </header>
     )
