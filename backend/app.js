@@ -1,7 +1,6 @@
 const express = require("express");
 const accountRoutes = require("./routes/accounts");
 const authRoutes = require("./routes/auth");
-const meetingRouter = require("./routes/meeting");
 
 const cors = require('cors');
 
@@ -25,7 +24,6 @@ configViewEngine(app)
 // define all our routes
 app.use("/", accountRoutes);
 app.use("/", authRoutes);
-app.use("/", meetingRouter);
 
 
 
@@ -41,4 +39,4 @@ db.query('SELECT 1 + 1', (error, results, fields) => {
   console.log('Connected to My SQL!');
 });   
 
- 
+  
