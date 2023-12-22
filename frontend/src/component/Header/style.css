@@ -301,3 +301,7 @@ section{
     cursor: pointer; /* Add cursor pointer on hover if desired */
     margin-left: 15px;
   }
+
+  .accountName{
+    color: var(--main-color);
+  }

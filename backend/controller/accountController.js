@@ -58,10 +58,31 @@ const getAccount = async (req, res) => {
     });
   };
 
+
+  const deleteAccountByID = async (req, res) => {
+    const account_id = req.params.id;
+    const sql = "DELETE FROM account WHERE account_id = ?";
+    const values = [account_id];
+  
+    try {
+      const [result] = await db.promise().query(sql, values);
+      // Check if the row was deleted
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ Error: "not found" });
+      }
+  
+      return res.status(200).json({ Status: "Success" });
+    } catch (err) {
+      console.error("Error deleting:", err);
+      return res.status(500).json({ Error: "Internal server error" });
+    }
+  };
+
   module.exports = {
     getAccount,
     getByID,
     getaccountByID , 
-    updateaccountID
+    updateaccountID,
+    deleteAccountByID
   };
 

@@ -1,1 +1,1 @@
-export {default} from "./ManagerPape"
+export {default} from "./ManagerPage"

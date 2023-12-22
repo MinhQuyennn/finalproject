@@ -13,7 +13,7 @@
   --text-color: #fff;
   --bg-color: #1b1f24;
   --second-bg-color: #22282f;
-  --main-color: #fbceb5;
+  --main-color: #fc935a;
   --other-color: #c3cad5;
   --h1-font: 4.5rem;
   --h2-font: 2.9rem;
@@ -216,7 +216,7 @@ input[type=text]:hover, input[type=password]:hover {
 }
 /* Set a style for all buttons */
 button {
-  background-color: #fbceb5;
+  background-color: var(--main-color);
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -228,8 +228,6 @@ button {
   /* Add border-radius for rounded corners */
   border-radius: 20px;
 
-  background: #fbceb5 !important;
-  border: 2px solid #fbceb5 !important;
   color: #000 !important;
   font-size: 15px;
   font-weight: 500;

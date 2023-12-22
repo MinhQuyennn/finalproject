@@ -111,7 +111,7 @@ function Header() {
     return (
       <header className={`header ${isSticky ? 'sticky' : ''}`}>
         <Link to="/home" className="logo">
-          Train<span>Booking</span>
+          <span>Train Booking</span>
         </Link>
 
         <ul className={`navlist ${isMenuOpen ? 'active' : ''}`}>
@@ -146,8 +146,8 @@ function Header() {
   } else if (localStorage.getItem("currentRole") === 'manager') {
     return (
       <header className={`header ${isSticky ? 'sticky' : ''}`}>
-        <Link to="/homeAd" className="logo">
-          Train<span>Booking</span>
+        <Link to="/homepageManager" className="logo">
+          <span>Train Booking</span>
         </Link>
 
         <ul className={`navlist ${isMenuOpen ? 'active' : ''}`}>
@@ -184,13 +184,13 @@ function Header() {
     return (
       <header className={`header ${isSticky ? 'sticky' : ''}`}>
         <Link to="/homepageEmployee" className="logo">
-          Train<span>Booking</span>
+          <span>Train Booking</span>
         </Link>
 
         <ul className={`navlist ${isMenuOpen ? 'active' : ''}`}>
           <li>
             <Link to="/homepageEmployee/Train">
-            Flight
+            Train
             </Link>
           </li>
           <li>
@@ -216,7 +216,7 @@ function Header() {
     return (
       <header className={`header ${isSticky ? 'sticky' : ''}`}>
         <Link to="/home" className="logo">
-          Train<span>Booking</span>
+          <span>Train Booking</span>
         </Link>
         <Link to="/">
           <div
