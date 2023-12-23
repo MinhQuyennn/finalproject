@@ -4,6 +4,8 @@ const authRoutes = require("./routes/auth");
 const customerRoutes =require("./routes/customer");
 const managerRoutes =require("./routes/manager")
 const employeeRoutes =require("./routes/employee");
+const { verifyToken } = require("./middleware/authMiddleware");
+require("dotenv").config();
 
 
 const cors = require('cors');
@@ -21,7 +23,7 @@ const port = process.env.PORT || 8888;
 
 app.use(cors());
 app.use(express.json());
-
+app.use(bodyParser.json());
 // Config template engine
 configViewEngine(app)
 

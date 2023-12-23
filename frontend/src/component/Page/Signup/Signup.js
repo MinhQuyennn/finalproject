@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styles from './style.css';
 import { Link, useNavigate } from 'react-router-dom';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
 function Signup() {
-
   const [gender, setGender] = useState('Female');
   const handleTimeChange = (e) => {
     setGender(e.target.value);
@@ -12,12 +13,12 @@ function Signup() {
 
   const [formData, setFormData] = useState({
     email: '',
-    full_name: '',
-    date_of_birth: '',
-    position: '',
-    company: '',
+    fullname: '',
+    dob: '',
+    id_card: '',
+    citizen_identification_card: '',
     gender: '',
-    phonenumber: '',
+    phone: '',
     password: '',
     confirmPassword: '',
   });
@@ -33,37 +34,42 @@ function Signup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(formData);
+  
     // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       console.error('Passwords do not match');
       // You may want to provide feedback to the user here
       return;
     }
-
+  
     try {
-      // Example using fetch API, replace with your actual API endpoint
-      const response = await fetch(`https://backend-final-web.onrender.com/signUp`, {
+      const response = await fetch(`http://localhost:8081/signUp`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           email: formData.email,
-          full_name: formData.full_name,
-          date_of_birth: formData.date_of_birth,
-          position: formData.position,
-          company: formData.company,
+          fullname: formData.fullname,
+          dob: formData.dob,
+          id_card: formData.id_card,
+          citizen_identification_card: formData.citizen_identification_card,
           gender: gender,
-          phonenumber: formData.phonenumber,
+          phone: formData.phone,
           password: formData.password,
         }),
       });
-
+  
+      const responseData = await response.json();
+  
       if (response.ok) {
+        const { id, role } = responseData;
+        localStorage.setItem('accountID', id);
+        localStorage.setItem('currentRole', role);
         console.log('Signup successful!');
         navigate('/');
       } else {
-        console.error('Signup failed');
+        console.error('Signup failed:', responseData); // Log the error response
         if (response.status === 401) {
           console.error('Email already exists');
           alert('Signup failed. The email already exists. Please use a different email.');
@@ -101,8 +107,8 @@ function Signup() {
                   <span className={`details`}>Full Name</span>
                   <input
                     type="text"
-                    name="full_name"
-                    value={formData.full_name}
+                    name="fullname"
+                    value={formData.fullname}
                     onChange={handleChange}
                     placeholder="Enter your full name"
                     required
@@ -113,33 +119,33 @@ function Signup() {
                   <span className={`details`}>Date of Birth</span>
                   <input
                     type="date"
-                    name="date_of_birth"
-                    value={formData.date_of_birth}
+                    name="dob"
+                    value={formData.dob}
                     onChange={handleChange}
-                    placeholder="Enter your DoB"
+                    placeholder="Enter your Date of Birth"
                     max={new Date().toISOString().split('T')[0]}
                     required
                   />
                 </div>
                 <div className={`input-box`}>
-                  <span className={`details`}>Position</span>
+                  <span className={`details`}>ID Card</span>
                   <input
                     type="text"
-                    name="position"
-                    value={formData.position}
+                    name="id_card"
+                    value={formData.id_card}
                     onChange={handleChange}
-                    placeholder="Enter your position"
+                    placeholder="Enter your ID Card"
                     required
                   />
                 </div>
                 <div className={`input-box`}>
-                  <span className={`details`}>Company</span>
+                  <span className={`details`}>Citizen Identification Card</span>
                   <input
                     type="text"
-                    name="company"
-                    value={formData.company}
+                    name="citizen_identification_card"
+                    value={formData.citizen_identification_card}
                     onChange={handleChange}
-                    placeholder="Enter your company"
+                    placeholder="Enter your Citizen Card"
                     required
                   />
                 </div>
@@ -156,13 +162,13 @@ function Signup() {
                 </div>
 
                 <div className={`input-box`}>
-                  <span className={`details`}>phonenumber</span>
+                  <span className={`details`}>Phone Number</span>
                   <input
                     type="text"
-                    name="phonenumber"
-                    value={formData.phonenumber}
+                    name="phone"
+                    value={formData.phone}
                     onChange={handleChange}
-                    placeholder="Enter your phonenumber"
+                    placeholder="Enter your Phone Number"
                     required
                   />
                 </div>
