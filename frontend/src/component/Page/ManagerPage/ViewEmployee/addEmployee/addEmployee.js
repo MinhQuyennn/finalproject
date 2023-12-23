@@ -4,7 +4,9 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify'; // Import toast from react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 
 function AddEmployee() {
   const [formData, setFormData] = useState({
@@ -14,7 +16,7 @@ function AddEmployee() {
     fullname: '',
     phone: '',
     gender: 'Male',
-    dob: '1990-01-01',
+    dob: ''
   });
 
   const handleInputChange = (e) => {
@@ -25,28 +27,14 @@ function AddEmployee() {
     e.preventDefault();
 
     try {
-      // Simulate API calls
-      const accountResponse = await fetch('/api/accounts', {
+      const response = await fetch('http://localhost:8081/addnewemployee', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: formData.email,
-          password: formData.password,
-          role: 'employee',
-        }),
-      });
-
-      const accountData = await accountResponse.json();
-
-      const employeeResponse = await fetch('/api/employees', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          account_id: accountData.account_id,
+          password: formData.password, // Send plain text password to be hashed on the server-side
           citizen_identification_card: formData.citizenIdentificationCard,
           fullname: formData.fullname,
           phone: formData.phone,
@@ -56,9 +44,11 @@ function AddEmployee() {
         }),
       });
 
-      const employeeData = await employeeResponse.json();
+      const data = await response.json();
 
-      console.log('New employee created:', employeeData);
+      console.log('New employee created:', data);
+           // Show toast notification on success
+           toast.success('Employee added successfully');
     } catch (error) {
       console.error('Error creating employee:', error);
     }
@@ -66,6 +56,9 @@ function AddEmployee() {
 
 
   return (
+    <div>
+         <ToastContainer />
+  
     <section className="contentP">
       <div className='text1'>Add Employee <span style={{ fontSize: '0.8em' }}><FontAwesomeIcon icon={faUserPlus} /></span></div>
       <div className='containerP'>
@@ -100,6 +93,7 @@ function AddEmployee() {
         </div>
       </div>
     </section>
+    </div>
   );
 }
 

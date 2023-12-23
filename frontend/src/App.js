@@ -5,7 +5,8 @@ import { publicRoutes, ManagerRoutes, EmployeeRoutes, CustomerRoutes } from './r
 // import Footer from './component/Footer';
 import Header from './component/Header';
 import Loader from './component/Loader/Loader';
-
+import ForgotPassword from './component/Page/Password/ForgotPassword';
+import ResetPassword from './component/Page/Password/ResetPassword';
 
 const App = () => {
   const [isManager, setIsManager] = useState(false);
@@ -95,6 +96,14 @@ const App = () => {
               }
             />
           ))}
+           <Route
+            path="/forgotten-password"
+            element={<ForgotPassword />} // Render the ForgottenPassword component
+          />
+           <Route
+            path="/reset-password"
+            element={<ResetPassword />} // Render the ForgottenPassword component
+          />
         </Routes>
         {/* <Footer /> */}
       </div>

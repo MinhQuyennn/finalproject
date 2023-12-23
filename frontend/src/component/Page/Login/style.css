@@ -429,3 +429,29 @@ span.psw {
 h3{
   font-weight: 300;
 }
+/* Other existing styles */
+
+.regis {
+  color: white;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between; /* Adjust alignment */
+  align-items: center; /* Vertically center the content */
+  margin-right: 15px;
+  transition: color 0.3s ease; /* Add transition effect for color change */
+  font-style: italic; /* Apply italic style */
+}
+
+.regis i {
+  margin-right: 10px; /* Adds some space between the link and other elements */
+}
+
+.regis a {
+  color: #e8e7e6; /* Customize link color */
+  text-decoration: none; /* Remove default underline */
+  transition: color 0.3s ease; /* Add transition effect for color change */
+}
+
+.regis a:hover {
+  color: #c3cad5; /* Change color on hover */
+}

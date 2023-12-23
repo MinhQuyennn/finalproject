@@ -9,7 +9,6 @@ router.put("/UpdateStatusByID/:id", employeeController.UpdateStatusByID);
 router.get("/getEmployeesByFullname", employeeController.getEmployeesByFullname);
 router.delete("/deleteEmployeeByID/:id", employeeController.deleteEmployeeByID);
 router.get("/getEmployeeByAcc/:id", employeeController.getEmployeeByAcc);
-
-
+router.post("/addnewemployee", employeeController.AddNewEmployee);
 
 module.exports = router;

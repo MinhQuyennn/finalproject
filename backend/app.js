@@ -29,7 +29,7 @@ configViewEngine(app)
 
 // define all our routes
 app.use("/", accountRoutes);
-app.use("/", authRoutes);
+app.use("/", verifyToken,authRoutes);
 app.use("/", customerRoutes);
 app.use("/", managerRoutes);
 app.use("/", employeeRoutes);

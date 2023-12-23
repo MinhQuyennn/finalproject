@@ -115,14 +115,14 @@ function Login() {
 
           <div className="regis">
             <p className="regis">
-              <i>
-                <a className="regis">
-                  <Link className="regis" to="/signup">Do not have an account?</Link>
-                </a>
-              </i>
+            <i>
+      <a className="regis" href="/forgotten-password">Forgotten your password?</a>
+    </i>
+    <a className="regis">
+      <Link className="regis" to="/signup">Do not have an account?</Link>
+    </a>
             </p>
           </div>
-
           <button type="button" onClick={handleSubmit}>
             LOGIN
           </button>

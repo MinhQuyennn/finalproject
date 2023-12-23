@@ -1,5 +1,5 @@
 const db = require("../config/database");
-
+const bcrypt = require('bcrypt');
 const getFullNameByIDEmployee = async (req, res) => {
     const id = req.params.id; 
     const sql = "SELECT fullname FROM employee e join account a on e.account_id = a.account_id where e.account_id = ?";
@@ -47,7 +47,7 @@ const getDatafromUser = async (req, res) => {
       });
     };
 
-    const getDatafromUserAndStatusFillter = async (req, res) => {
+const getDatafromUserAndStatusFillter = async (req, res) => {
         const status = req.params.status; 
         const sql = "SELECT * FROM employee e JOIN account a ON e.account_id = a.account_id WHERE e.status = ?";
         const values = [status];
@@ -148,8 +148,56 @@ const deleteEmployeeByID = async (req, res) => {
     }
   };
 
-
-
+  const AddNewEmployee = async (req, res) => {
+    const {
+      email,
+      password,
+      citizen_identification_card,
+      fullname,
+      phone,
+      gender,
+      dob,
+      status
+    } = req.body;
+  
+    // Default role set to 'employee' if not provided in the request body
+    const role = req.body.role || 'employee';
+  
+    try {
+      // Hash the password before storing it
+      const hashedPassword = await bcrypt.hash(password, 10); // Adjust the salt rounds as needed
+  
+      // Step 1: Insert into the account table to create a new account
+      const insertAccountQuery = "INSERT INTO account (email, password, role) VALUES (?, ?, ?)";
+      const accountValues = [email, hashedPassword, role];
+      const [accountResult] = await db.promise().query(insertAccountQuery, accountValues);
+  
+      if (!accountResult.insertId) {
+        return res.status(500).json({ Error: "Failed to create account" });
+      }
+  
+      const accountId = accountResult.insertId;
+  
+      // Step 2: Insert into the employee table with the created account_id
+      const insertEmployeeQuery = `
+        INSERT INTO employee (account_id, citizen_identification_card, fullname, phone, gender, dob, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `;
+      const employeeValues = [accountId, citizen_identification_card, fullname, phone, gender, dob, status];
+      const [employeeResult] = await db.promise().query(insertEmployeeQuery, employeeValues);
+  
+      if (!employeeResult.insertId) {
+        // Rollback account creation if employee creation fails
+        await db.promise().query('DELETE FROM account WHERE account_id = ?', [accountId]);
+        return res.status(500).json({ Error: "Failed to create employee" });
+      }
+  
+      return res.status(200).json({ Status: "Employee added successfully" });
+    } catch (err) {
+      console.error("Error adding employee:", err);
+      return res.status(500).json({ Error: "Internal server error" });
+    }
+  };
 
 
 module.exports = {
@@ -159,5 +207,6 @@ module.exports = {
     UpdateStatusByID,
     getEmployeesByFullname,
     deleteEmployeeByID,
-    getEmployeeByAcc
+    getEmployeeByAcc,
+    AddNewEmployee
 };
