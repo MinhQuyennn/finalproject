@@ -32,77 +32,92 @@ function ViewEmployee() {
   };
 
   const handleWorkStatus = (id) => {
-    fetch(`http://localhost:8081/UpdateStatusByID/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        status: 'quit',
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Quit:', data);
-        fetchData();
+    const isConfirmed = window.confirm('Are you sure you want to change the status to `quit`? This account will be blocked');
+    if (isConfirmed) {
+      fetch(`http://localhost:8081/UpdateStatusByID/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          status: 'quit',
+        }),
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Quit:', data);
+          fetchData();
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      alert('Change the status Status changed to `quit` successfully');
+    }
+
   };
 
   const handleQuitStatus = (id) => {
     // Make a request to update the Status status to 'Work'
-    fetch(`http://localhost:8081/UpdateStatusByID/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        status: 'work',
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Status Work:', data);
-        fetchData();
+    const isConfirmed = window.confirm('Are you sure you want to change the status to `work`?');
+    if (isConfirmed) {
+      fetch(`http://localhost:8081/UpdateStatusByID/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          status: 'work',
+        }),
       })
-      .catch((error) => {
-        console.error('Error approving Status:', error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Status Work:', data);
+          fetchData();
+        })
+        .catch((error) => {
+          console.error('Error approving Status:', error);
+        });
+      alert('Change the status Status changed to `work` successfully');
+    }
+
   };
 
 
 
-  const handleDelete = async (employeeId, accountId) => {
-    try {
-      // Step 1: Delete the employee
-      const employeeResponse = await fetch(`http://localhost:8081/DeleteEmployeeByID/${employeeId}`, {
-        method: 'DELETE',
-      });
-  
-      const employeeData = await employeeResponse.json();
-      console.log('Deleted employee:', employeeData);
-  
-      // Step 2: Delete the associated account
-      const accountResponse = await fetch(`http://localhost:8081/DeleteAccountByID/${accountId}`, {
-        method: 'DELETE',
-      });
-  
-      const accountData = await accountResponse.json();
-      console.log('Deleted account:', accountData);
-  
-      // Delay before fetching data again
-      setTimeout(() => {
-        console.log('Data before fetch:', data); // Log data before fetch
-        fetchData();
-        console.log('Data after fetch:', data); // Log data after fetch
-      }, 500);
-    } catch (error) {
-      console.error('Error deleting employee or account:', error);
+  const handleDelete = async (employeeId, employeeName, accountId) => {
+    const isConfirmed = window.confirm(`You want to delete the '${employeeName}' employee of account?`);
+    if (isConfirmed) {
+
+      try {
+        // Step 1: Delete the employee
+        const employeeResponse = await fetch(`http://localhost:8081/DeleteEmployeeByID/${employeeId}`, {
+          method: 'DELETE',
+        });
+
+        const employeeData = await employeeResponse.json();
+        console.log('Deleted employee:', employeeData);
+
+        // Step 2: Delete the associated account
+        const accountResponse = await fetch(`http://localhost:8081/DeleteAccountByID/${accountId}`, {
+          method: 'DELETE',
+        });
+
+        const accountData = await accountResponse.json();
+        console.log('Deleted account:', accountData);
+
+        // Delay before fetching data again
+        setTimeout(() => {
+          console.log('Data before fetch:', data); // Log data before fetch
+          fetchData();
+          console.log('Data after fetch:', data); // Log data after fetch
+        }, 500);
+      } catch (error) {
+        console.error('Error deleting employee or account:', error);
+      }
+      alert('Deleted successfully');
     }
   };
-  
+
 
   useEffect(() => {
     fetchData();
@@ -184,7 +199,7 @@ function ViewEmployee() {
                       </button>
                     </td>
                     <td className='delete'>
-                      <button onClick={() => handleDelete(item.employee_id, item.account_id)}>
+                      <button onClick={() => handleDelete(item.employee_id, item.fullname, item.account_id)}>
                         Delete
                       </button>
                     </td>

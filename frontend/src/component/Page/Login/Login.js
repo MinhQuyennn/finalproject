@@ -24,7 +24,7 @@ function Login() {
           password: password,
         }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log('Response data:', data);
@@ -32,37 +32,48 @@ function Login() {
         const { token, role: userRole, id: accountId } = data;
         console.log('Account ID:', accountId);
 
+        let additionalData = {};
+
+
         // Store token, role, and account ID in local storage
         localStorage.setItem('accountID', accountId);
         console.log('After setting accountID:', localStorage.getItem('accountID'));
 
         localStorage.setItem('currentRole', userRole);
-  
+
+
         // Navigate based on the retrieved role from local storage
         if (userRole === 'customer') {
           navigate('/home');
           localStorage.setItem('token-customer', token);
-          console.log("Day la token-user" ,localStorage.getItem('token-user'));
+          console.log("Day la token-user", localStorage.getItem('token-user'));
           window.location.reload();
-
-
         } else if (userRole === 'manager') {
           localStorage.setItem('token-manager', token);
           navigate('/homepageManager');
-          console.log("Day la token-manager" ,localStorage.getItem('token-manager'));
+          console.log("Day la token-manager", localStorage.getItem('token-manager'));
           window.location.reload();
+        }
+        else if (userRole === 'employee') {
+          const employeeResponse = await fetch(`http://localhost:8081/getEmployeeByAcc/${accountId}`);
+          additionalData = await employeeResponse.json();
+          console.log('Employee Data:', additionalData);
 
+          const { Status: status } = additionalData;
 
-        } else if (userRole === 'employee') {
-          localStorage.setItem('token-employee', token);
-          navigate('/hompageEmployee');
-          console.log("Day la token-employee" , localStorage.getItem('token-employee'));
-          window.location.reload();
-
+          if (status === 'quit') {
+            // Display alert if the account status is 'quit'
+            alert("You don't have permission to log in. Please contact your manager to unlock your account.");
+            return;
+          }
+          else {
+            localStorage.setItem('token-employee', token);
+            navigate('/hompageEmployee');
+            console.log("Day la token-employee", localStorage.getItem('token-employee'));
+            window.location.reload();
+          }
 
         }
-        
-
       } else {
         // Handle login failure (e.g., display an error message)
         console.error('Login failed');
@@ -71,6 +82,7 @@ function Login() {
       console.error('An error occurred during login:', error);
     }
   };
+
 
 
   return (
