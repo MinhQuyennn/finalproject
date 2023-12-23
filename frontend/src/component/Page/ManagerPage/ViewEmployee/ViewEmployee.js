@@ -11,6 +11,19 @@ function ViewEmployee() {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
+
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState(null);
+
+  const handleRowClick = (rowData) => {
+    setSelectedRowData(rowData);
+    setPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+  };
+
   const fetchData = () => {
     let url = `http://localhost:8081/getDatafromUser`;
 
@@ -161,9 +174,9 @@ function ViewEmployee() {
           <table className='employeeList1'>
             <thead>
               <tr>
-                <th>employee_id</th>
-                <th>account_id</th>
-                <th>citizen_identification_card</th>
+                <th>employee id</th>
+                <th>account id</th>
+                <th>citizen identification card</th>
                 <th>fullname</th>
                 <th>phone</th>
                 <th>gender</th>
@@ -179,7 +192,7 @@ function ViewEmployee() {
             <tbody>
               {data !== undefined && data.length > 0 ? (
                 data.map((item) => (
-                  <tr key={item.employee_id}>
+                  <tr key={item.employee_id} onClick={() => handleRowClick(item)} >
                     <td>{item.employee_id}</td>
                     <td>{item.account_id}</td>
                     <td>{item.citizen_identification_card}</td>
@@ -214,6 +227,8 @@ function ViewEmployee() {
 
 
           </table>
+
+          
         </div>
       </div>
     </section>

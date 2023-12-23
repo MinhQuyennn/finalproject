@@ -43,7 +43,7 @@
     font-size: 17px;
     border: 1px solid grey;
     float: left;
-    width: 138% !important;
+    width: 113% !important;
     color: black;
   }
   
@@ -79,4 +79,8 @@ input[type=text]{
     margin-right: 10px;
 }
 
-  
+.employeeList1 td:nth-child(10) {
+  max-width: 150px; /* Adjust the maximum width as needed */
+  overflow: auto;
+  white-space: nowrap;
+}
