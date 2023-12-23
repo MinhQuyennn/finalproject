@@ -14,6 +14,29 @@ const getFullNameByIDEmployee = async (req, res) => {
     });
 };
 
+const getEmployeeByAcc = async (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM employee e JOIN account a ON e.account_id = a.account_id WHERE e.account_id = ?";
+    const values = [id];
+  
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        return res.status(500).json({ Error: "Error fetching account ID" });
+      }
+  
+      if (result.length === 0) {
+        return res.status(404).json({ Error: "Employee not found" });
+      }
+  
+      const employeeData = result[0];
+      const { status } = employeeData;
+  
+      return res.status(200).json({ Status: status, employee: employeeData });
+    });
+  };
+  
+  
+
 const getDatafromUser = async (req, res) => {
     const sql = "SELECT * FROM employee e join account a on e.account_id = a.account_id";
     db.query(sql, (err, result) => {
@@ -22,7 +45,7 @@ const getDatafromUser = async (req, res) => {
         }
         return res.status(200).json({ Status: "Success", accounts: result });
       });
-    };;
+    };
 
     const getDatafromUserAndStatusFillter = async (req, res) => {
         const status = req.params.status; 
@@ -135,5 +158,6 @@ module.exports = {
     getDatafromUserAndStatusFillter,
     UpdateStatusByID,
     getEmployeesByFullname,
-    deleteEmployeeByID
+    deleteEmployeeByID,
+    getEmployeeByAcc
 };
