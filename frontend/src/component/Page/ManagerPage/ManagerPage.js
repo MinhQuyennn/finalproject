@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 
 
-function ManagerPage() {
+function ViewProfile() {
  
   return (
     <section className="hero">
@@ -13,4 +13,4 @@ function ManagerPage() {
 }
 
 
-export default ManagerPage;
+export default ViewProfile;

@@ -84,3 +84,14 @@ input[type=text]{
   overflow: auto;
   white-space: nowrap;
 }
+
+.input-phone {
+  display: block;
+  margin: 0 auto;
+  border-bottom: 1px solid #ccc; /* Add a 1px solid border with a light gray color */
+  background-color: transparent;
+  width: 130%;
+  text-align: center;
+  color: white;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}

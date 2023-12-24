@@ -4,6 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 
 function ViewEmployee() {
@@ -11,17 +12,11 @@ function ViewEmployee() {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
+  const navigate = useNavigate();
 
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const [selectedRowData, setSelectedRowData] = useState(null);
-
-  const handleRowClick = (rowData) => {
-    setSelectedRowData(rowData);
-    setPopupOpen(true);
-  };
-
-  const handleClosePopup = () => {
-    setPopupOpen(false);
+  const handleRowClick = (employeeId) => {
+    // Use the navigate function to navigate to the updateEmployee page
+    navigate(`/updateEmployee/${employeeId}`);
   };
 
   const fetchData = () => {
@@ -132,6 +127,40 @@ function ViewEmployee() {
   };
 
 
+  const updatePhoneNumber = async (employeeId, newPhoneNumber) => {
+    try {
+      const response = await fetch(`http://localhost:8081/updatePhoneNumber/${employeeId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone: newPhoneNumber }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update phone number');
+      }
+
+      const result = await response.json();
+
+      if (result.Status) {
+        // Successful update
+        console.log(result.Status);
+        fetchData(); // Refresh employee data after update
+      } else {
+        // Record not found
+        console.log(result.Error);
+      }
+    } catch (error) {
+      console.error('Error updating phone number:', error.message);
+    }
+  };
+
+  const handlePhoneChange = (e, employeeId) => {
+    const newPhoneNumber = e.target.value;
+    updatePhoneNumber(employeeId, newPhoneNumber);
+  };
+
   useEffect(() => {
     fetchData();
     console.log('Fetching data...');
@@ -192,12 +221,19 @@ function ViewEmployee() {
             <tbody>
               {data !== undefined && data.length > 0 ? (
                 data.map((item) => (
-                  <tr key={item.employee_id} onClick={() => handleRowClick(item)} >
+                  <tr key={item.employee_id}>
                     <td>{item.employee_id}</td>
                     <td>{item.account_id}</td>
                     <td>{item.citizen_identification_card}</td>
                     <td>{item.fullname}</td>
-                    <td>{item.phone}</td>
+                    <td>
+                      <input
+                        type="phone"
+                        value={item.phone}
+                        onChange={(e) => handlePhoneChange(e, item.employee_id)}
+                        className="input-phone"
+                      />  
+                    </td>
                     <td>{item.gender}</td>
                     <td>{item.dob}</td>
                     <td>{item.status}</td>
@@ -217,6 +253,7 @@ function ViewEmployee() {
                       </button>
                     </td>
                   </tr>
+
                 ))
               ) : (
                 <tr>
@@ -228,7 +265,7 @@ function ViewEmployee() {
 
           </table>
 
-          
+
         </div>
       </div>
     </section>

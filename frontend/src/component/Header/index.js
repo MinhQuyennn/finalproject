@@ -157,13 +157,8 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/homepageManager/viewBooking">
-              View Booking
-            </Link>
-          </li>
-          <li>
-            <Link to="/homepageManager/viewUser">
-              View User
+            <Link to="/homepageManager/viewProfile/${accountID}">
+              View Profile
             </Link>
           </li>
           <li>

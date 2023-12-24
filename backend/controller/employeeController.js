@@ -199,6 +199,36 @@ const deleteEmployeeByID = async (req, res) => {
     }
   };
 
+  const updatePhoneNumber = async (req, res) => {
+    try {
+        const employee_id = req.params.id;
+        const phone = req.body.phone;
+
+        const sql = "UPDATE employee SET phone = ? WHERE employee_id = ?";
+        const values = [phone, employee_id];
+
+        const result = await new Promise((resolve, reject) => {
+            db.query(sql, values, (err, result) => {
+                if (err) {
+                    console.error("Error:", err);
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        if (result.affectedRows > 0) {
+            return res.status(200).json({ Status: "Updated phone successfully" });
+        } else {
+            return res.status(404).json({ Error: "Record not found" });
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        return res.status(500).json({ Error: "Internal server error" });
+    }
+};
+  
 
 module.exports = {
     getFullNameByIDEmployee,
@@ -208,5 +238,6 @@ module.exports = {
     getEmployeesByFullname,
     deleteEmployeeByID,
     getEmployeeByAcc,
-    AddNewEmployee
+    AddNewEmployee,
+    updatePhoneNumber
 };

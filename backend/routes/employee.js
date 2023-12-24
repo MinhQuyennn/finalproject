@@ -10,5 +10,6 @@ router.get("/getEmployeesByFullname", employeeController.getEmployeesByFullname)
 router.delete("/deleteEmployeeByID/:id", employeeController.deleteEmployeeByID);
 router.get("/getEmployeeByAcc/:id", employeeController.getEmployeeByAcc);
 router.post("/addnewemployee", employeeController.AddNewEmployee);
+router.put("/updatePhoneNumber/:id", employeeController.updatePhoneNumber);
 
 module.exports = router;
