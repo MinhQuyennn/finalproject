@@ -1,0 +1,39 @@
+.advertise__route {
+    padding-bottom: 2%;
+    position: relative;
+  }
+  
+  .containerfluid {
+    background-color: #d8e7d8;
+    color: #32325C;
+    height: 41rem;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .containerfluid .h1 {
+    font-size: 4rem;
+    color: white;
+  }
+  
+  .containerfluid .button {
+    border-radius: 30px;
+    background-color: #41e096;
+    border: none;
+    font-weight: bolder;
+  }
+  
+  @media (max-width: 991px) {
+    .containerfluid h1,
+    .containerfluid h2 {
+      text-align: center;
+    }
+  
+    .containerfluid .button {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  
+  

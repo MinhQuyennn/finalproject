@@ -1,0 +1,40 @@
+.search__route{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-container {
+   display: flex;
+  }
+  
+  .dropdown {
+    background-color: white;
+    display: flex;
+    width: 66%;
+    flex-direction: column;
+    border: 1px solid grey;
+    margin-top: 2%;
+    margin-left: 6.7%;
+    border-radius: 8px;
+    border: 1px #007bff solid;
+  }
+  
+  .dropdown:empty {
+    border: none;
+  }
+  
+  .dropdown-row {
+    cursor: pointer;
+    text-align: start;
+  }
+  
+  
+  .search-inner {
+    display: flex;
+  }
+
+  .row
+  {
+    margin-top: 20px;
+  }

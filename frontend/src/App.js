@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
-import { publicRoutes, ManagerRoutes, EmployeeRoutes, CustomerRoutes } from './routes/index';
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  Link,
+} from "react-router-dom";
+import {
+  publicRoutes,
+  ManagerRoutes,
+  EmployeeRoutes,
+  CustomerRoutes,
+} from "./routes/index";
 
 // import Footer from './component/Footer';
-import Header from './component/Header';
-import Loader from './component/Loader/Loader';
-import ForgotPassword from './component/Page/Password/ForgotPassword';
-import ResetPassword from './component/Page/Password/ResetPassword';
+import Header from "./component/Header";
+import Loader from "./component/Loader/Loader";
+import ForgotPassword from "./component/Page/Password/ForgotPassword";
+import ResetPassword from "./component/Page/Password/ResetPassword";
+import SearchRoute from "./component/Page/searchRoute/Route";
 
 const App = () => {
   const [isManager, setIsManager] = useState(false);
@@ -25,17 +37,15 @@ const App = () => {
     };
 
     fetchData();
-    const currentRole = localStorage.getItem('currentRole');
-    if (currentRole === 'manager') {
+    const currentRole = localStorage.getItem("currentRole");
+    if (currentRole === "manager") {
       setIsManager(true);
-    } else if (currentRole === 'employee') {
+    } else if (currentRole === "employee") {
       setIsEmployee(true);
-    } else if (currentRole === 'customer') {
+    } else if (currentRole === "customer") {
       setIsCustomer(true);
     }
-
   }, []);
-
 
   if (loading) {
     return <Loader />;
@@ -43,29 +53,18 @@ const App = () => {
 
   return (
     <Router>
-      <div className='App'>
-        
+      <div className="App">
         <Header />
         <Routes>
           {publicRoutes.map((route) => (
-            <Route
-              key={route.path}
-              path={route.path}
-              element={route.element}
-            />
+            <Route key={route.path} path={route.path} element={route.element} />
           ))}
 
           {ManagerRoutes.map((route) => (
             <Route
               key={route.path}
               path={route.path}
-              element={
-                isManager ? (
-                  route.element
-                ) : (
-                  <Navigate to="/" replace />
-                )
-              }
+              element={isManager ? route.element : <Navigate to="/" replace />}
             />
           ))}
 
@@ -73,13 +72,7 @@ const App = () => {
             <Route
               key={route.path}
               path={route.path}
-              element={
-                isEmployee ? (
-                  route.element
-                ) : (
-                  <Navigate to="/" replace />
-                )
-              }
+              element={isEmployee ? route.element : <Navigate to="/" replace />}
             />
           ))}
 
@@ -87,23 +80,18 @@ const App = () => {
             <Route
               key={route.path}
               path={route.path}
-              element={
-                isCustomer ? (
-                  route.element
-                ) : (
-                  <Navigate to="/" replace />
-                )
-              }
+              element={isCustomer ? route.element : <Navigate to="/" replace />}
             />
           ))}
-           <Route
+          <Route
             path="/forgotten-password"
             element={<ForgotPassword />} // Render the ForgottenPassword component
           />
-           <Route
+          <Route
             path="/reset-password"
             element={<ResetPassword />} // Render the ForgottenPassword component
           />
+          <Route path="/route" element={<SearchRoute />} />
         </Routes>
         {/* <Footer /> */}
       </div>
@@ -112,4 +100,3 @@ const App = () => {
 };
 
 export default App;
-
