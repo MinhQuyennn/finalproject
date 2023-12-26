@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
-
-
-
+import React from 'react';
+import './style.css'; // Import the CSS file directly
 
 function EmployeePage() {
- 
   return (
-    <section className="hero">
-    <div>EmployeePage</div>
-    </section>
+    <div>
+      hi
+    </div>
   );
 }
-
 
 export default EmployeePage;

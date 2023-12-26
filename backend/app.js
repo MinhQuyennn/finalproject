@@ -31,9 +31,9 @@ configViewEngine(app);
 // define all our routes
 app.use("/", accountRoutes);
 app.use("/", verifyToken, authRoutes);
-app.use("/", customerRoutes);
+app.use("/", verifyToken,customerRoutes);
 app.use("/", managerRoutes);
-app.use("/", employeeRoutes);
+app.use("/",  employeeRoutes);
 app.use("/api", routeRoute);
 app.use("/api", trainRoute);
 app.use("/api", carriageRoute);
