@@ -90,32 +90,32 @@ function SearchRoute() {
         encodeURIComponent(departureDate.trim())
       );
       console.log("Train API response:", response);
-      // Rest of the code...
     } catch (error) {
       console.error("Error searching for route:", error);
-      // Handle the error...
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await routeservice.ListAllRoute();
-        console.log("API response: ", response);
+  const fetchData = async () => {
+    try {
+      const response = await routeservice.ListAllRoute();
+      console.log("API response:", response);
 
-        if (response.data.error) {
-          console.error("API error: ", response.data.error);
-          return;
-        }
-
-        setData(response.data.lists ?? []);
-      } catch (error) {
-        console.error("Error fetching data: ", error.message);
+      if (!response.lists) {
+        console.error("API error: Missing 'lists' property in response");
+        return;
       }
-    };
 
-    fetchData();
-  }, []);
+      console.log("API data:", response.lists);
+      setData(response.lists);
+      
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+  };
+
+  fetchData();
+}, []);
 
   useEffect(() => {
     console.log("Data:", data);
