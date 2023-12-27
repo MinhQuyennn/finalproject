@@ -46,6 +46,7 @@ function Login() {
         if (userRole === 'customer') {
           navigate('/home');
           localStorage.setItem('token-customer', token);
+          localStorage.setItem('token-customer', token);
           console.log("Day la token-user", localStorage.getItem('token-user'));
           window.location.reload();
         } else if (userRole === 'manager') {

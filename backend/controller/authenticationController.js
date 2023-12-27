@@ -76,6 +76,34 @@ const login = async (req, res, next) => {
 };
 
 
+const GetCustomerIDByAccountID = async (req, res) => {
+  const accountId = req.params.account_id;
+
+  const sql = 'SELECT customer_id FROM customer WHERE account_id = ?';
+
+  db.query(sql, [accountId], (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        status: 'failed',
+        error: 'Internal Server Error',
+      });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({
+        status: 'failed',
+        error: 'Customer not found for the provided account ID',
+      });
+    }
+
+    const customerId = result[0].customer_id;
+    res.json({
+      status: 'success',
+      customer_id: customerId,
+    });
+  });
+};
+
 
 const signUp = async (req, res) => {
   const {
@@ -251,5 +279,6 @@ module.exports = {
   login,
   signUp,
   requestPasswordReset,
-  resetPassword
+  resetPassword,
+  GetCustomerIDByAccountID
 };
