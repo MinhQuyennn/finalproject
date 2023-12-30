@@ -85,7 +85,14 @@ function SearchRoute() {
         encodeURIComponent(valuearrival.trim()),
         encodeURIComponent(departureDate.trim())
       );
+
       console.log("Train API response:", response);
+
+      if (!response || !response.routes) {
+        console.error("API error: No routes in the response");
+        // Handle the error...
+        return;
+      }
 
       // Process the modified data structure...
     } catch (error) {
@@ -100,12 +107,12 @@ function SearchRoute() {
         const response = await routeservice.ListAllRoute();
         console.log("API response: ", response);
 
-        if (response.data.error) {
-          console.error("API error: ", response.data.error);
+        if (!response || !response.routes) {
+          console.error("API error: No data in the response");
           return;
         }
 
-        setData(response.data.routes ?? []);
+        setData(response.routes);
       } catch (error) {
         console.error("Error fetching data: ", error.message);
       }

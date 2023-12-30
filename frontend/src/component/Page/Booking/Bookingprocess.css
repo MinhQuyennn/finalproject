@@ -41,4 +41,141 @@
     color: black;
   }
   
-  
+.selected__form__seat
+{
+  display: flex;
+  margin-left: 5%;
+}
+
+.seat__width{
+  display: flex;
+  width: 50%;
+  flex-wrap: wrap;
+}
+
+.seat__form{
+  width: 50%;
+}
+
+.booking__detail__info
+{
+  font-size: 20px;
+}
+
+.booking_id{
+  padding-right: 5%;
+  border: 1px solid white;
+  background-color: #fc935a;
+  border-radius: 25px;
+  height: 50px;
+  width: 17%;
+  margin-bottom: 1%;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding-left: 2%;
+}
+
+.booking__info
+{
+  display: flex;
+  width: 100%;
+  padding-bottom: 1%;
+}
+
+#train__id
+{
+ 
+  border: 1px solid white;
+  background-color: #fc935a;
+  border-radius: 25px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 2%;
+    padding-right: 8%;
+}
+
+#route__id
+{
+  border: 1px solid white;
+  background-color: #fc935a;
+  border-radius: 25px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 2%;
+    padding-right: 8%;
+  margin-left: 5%;
+}
+
+#seat__id
+{
+  border: 1px solid white;
+  background-color: #fc935a;
+  border-radius: 25px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 2%;
+  padding-right: 8%;
+  margin-left: 5%;
+}
+
+#carriage__id{
+  border: 1px solid white;
+  background-color: #fc935a;
+  border-radius: 25px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 2%;
+    padding-right: 8%;
+  margin-left: 5%;
+}
+
+.passenger__info{
+  display: inline-block;
+}
+
+#c__name{
+  margin-right: 1%;
+  padding-right: 5%;
+  border: 1px solid white;
+  background-color: #fc935a;
+  border-radius: 25px;
+  height: 50px;
+  width: 320px;
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
+  margin-bottom: 2%;
+}
+
+#c__id{
+  margin-right: 1%;
+  padding-right: 5%;
+  border: 1px solid white;
+  background-color: #fc935a;
+  border-radius: 25px;
+  height: 50px;
+  width: 320px;
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
+  margin-bottom: 2%;
+}
+
+#c__phone{
+  margin-right: 1%;
+  padding-right: 5%;
+  border: 1px solid white;
+  background-color: #fc935a;
+  border-radius: 25px;
+  height: 50px;
+  width: 320px;
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
+}
+

@@ -87,7 +87,7 @@ const CarriageComponent = () => {
     event.preventDefault();
 
     const bookingData = {
-      customer_id: 1,
+      customer_id: localStorage.getItem("selectedCustomerId"),
       route_id: localStorage.getItem("selectedRouteId"),
       train_id: localStorage.getItem("selectedTrainId"),
       seat_id: localStorage.getItem("selectedSeatId"),
@@ -120,7 +120,7 @@ const CarriageComponent = () => {
   return (
     <div style={{ paddingTop: "6%" }}>
       <div>
-        <h2>Carriages</h2>
+        <h2 style={{ marginLeft: "5%" }}>Carriages</h2>
         <div className="carriages__content">
           {carriages.map((carriage) => (
             <div
@@ -154,22 +154,27 @@ const CarriageComponent = () => {
         </div>
       </div>
       <div className="selected__form__seat">
-        <div>
+        <div className="seat__form">
           {showSeats && selectedCarriageId && (
-            <div>
+            <div className="seat__detail">
               <h2>Seats for Carriage {selectedCarriageId}</h2>
-              {seats.map((seat) => (
-                <div key={seat.seatId}>
-                  <button
-                    style={getSeatButtonStyle(seat.status, seat.seat_id)}
-                    onClick={() =>
-                      handleSeatButtonClick(seat.status, seat.seat_id)
-                    }
+              <div className="seat__width">
+                {seats.map((seat) => (
+                  <div
+                    key={seat.seatId}
+                    style={{ width: "30%", marginRight: "2%" }}
                   >
-                    {seat.seat_id}
-                  </button>
-                </div>
-              ))}
+                    <button
+                      style={getSeatButtonStyle(seat.status, seat.seat_id)}
+                      onClick={() =>
+                        handleSeatButtonClick(seat.status, seat.seat_id)
+                      }
+                    >
+                      {seat.seat_id}
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
