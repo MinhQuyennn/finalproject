@@ -65,7 +65,7 @@ function Bookingdetail() {
               <p id="c__name">{bookingData.passenger_full_name}</p>
             </div>
             <div style={{ display: "flex" }}>
-              <p id="c__id">Passenger Phone Number: </p>
+              <p id="c__id">Passenger Citizen Identification Card: </p>
               <p id="c__id">
                 {bookingData.passenger_citizen_identification_card}
               </p>
