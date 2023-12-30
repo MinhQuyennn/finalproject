@@ -5,6 +5,6 @@ const trainController = require("../controller/train");
 router.get("/train", trainController.getAllTrains);
 router.get(
   "/train/:departure_station/:arrival_station/:departure_date",
-  trainController.getTrainData
+  trainController.getAllTrainData
 );
 module.exports = router;

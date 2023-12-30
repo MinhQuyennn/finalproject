@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./Advertise.css";
-import Buttons from "./Button";
 
 function Advertise() {
   return (
@@ -14,7 +13,10 @@ function Advertise() {
         >
           <div className="container">
             <div className="row align-items-center" style={{ height: "41rem" }}>
-              <div className="col-12 text-start">
+              <div
+                className="col-12 text-start"
+                style={{ paddingTop: "25%", paddingLeft: "20%" }}
+              >
                 <h1 style={{ color: "#32325C" }}>
                   Booking <br /> Train Today
                 </h1>

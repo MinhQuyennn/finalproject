@@ -19,9 +19,9 @@ const SlideContent = ({ slides }) => (
         <img
           src={slide.imageUrl}
           alt={`Slide ${index + 1}`}
-          style={{ width: "93%", height: "50%" }}
+          style={{ width: "360px", height: "200px" }}
         />
-        <div className="slide-content">
+        <div className="slide-content" style={{ marginTop: "10px" }}>
           <h3>{slide.title}</h3>
           <p>{slide.content}</p>
         </div>
@@ -84,12 +84,17 @@ export default function Paperbelow() {
 
   return (
     <div style={{ paddingTop: "2%" }}>
-      <div className="d-flex justify-content-around">
-        <div style={{ width: "18rem" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ width: "18rem", marginRight: "10%" }}>
           <SlideContent slides={slidesData1} />
         </div>
 
-        <div style={{ width: "18rem" }}>
+        <div style={{ width: "18rem", marginRight: "10%" }}>
           <SlideContent slides={slidesData2} />
         </div>
 

@@ -1,0 +1,44 @@
+
+.carriages__content{
+    display: flex;
+}
+
+.carriages__button {
+    position: relative;
+    margin-left: 15%;
+    width: 250px;
+  }
+  
+  .carriage-price {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    display: none;
+  }
+  
+  .carriage-price.active {
+    display: block;
+    color: black;
+    margin-bottom: 90px;
+    width: 150px;
+    padding-left: 10%;
+  }
+  
+  .carriage-price:not(.active) {
+    display: none;
+    color: black;
+  }
+  
+  .selected {
+    background-color: #4caf50;
+    color: black;
+  }
+  
+  

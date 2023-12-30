@@ -19,6 +19,9 @@ import Loader from "./component/Loader/Loader";
 import ForgotPassword from "./component/Page/Password/ForgotPassword";
 import ResetPassword from "./component/Page/Password/ResetPassword";
 import SearchRoute from "./component/Page/searchRoute/Route";
+import Train from "./component/Page/train/train";
+import Bookingprocess from "./component/Page/Booking/Bookingprocess";
+import BookingDetail from "./component/Page/Booking/Bookingdetail";
 
 const App = () => {
   const [isManager, setIsManager] = useState(false);
@@ -83,17 +86,22 @@ const App = () => {
               element={isCustomer ? route.element : <Navigate to="/" replace />}
             />
           ))}
-          <Route
-            path="/forgotten-password"
-            element={<ForgotPassword />} // Render the ForgottenPassword component
-          />
-          <Route
-            path="/reset-password"
-            element={<ResetPassword />} // Render the ForgottenPassword component
-          />
+          <Route path="/forgotten-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/route" element={<SearchRoute />} />
+          <Route
+            path="/train/:departure_station/:arrival_station/:departure_date"
+            element={<Train />}
+          />
+          <Route
+            path="/bookingprocess/:train_id"
+            element={<Bookingprocess />}
+          />
+          <Route
+            path="/bookingdetail/:booking_id"
+            element={<BookingDetail />}
+          />
         </Routes>
-        {/* <Footer /> */}
       </div>
     </Router>
   );

@@ -7,6 +7,8 @@ const employeeRoutes = require("./routes/employee");
 const routeRoute = require("./routes/route");
 const trainRoute = require("./routes/train");
 const carriageRoute = require("./routes/carriages");
+const bookingproccessRoute = require("./routes/bookingprocess");
+
 const { verifyToken } = require("./middleware/authMiddleware");
 
 require("dotenv").config();
@@ -31,12 +33,13 @@ configViewEngine(app);
 // define all our routes
 app.use("/", accountRoutes);
 app.use("/", verifyToken, authRoutes);
-app.use("/", verifyToken,customerRoutes);
+app.use("/", verifyToken, customerRoutes);
 app.use("/", managerRoutes);
-app.use("/",  employeeRoutes);
+app.use("/", employeeRoutes);
 app.use("/api", routeRoute);
 app.use("/api", trainRoute);
 app.use("/api", carriageRoute);
+app.use("/api", bookingproccessRoute);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running on port ${port}`);
