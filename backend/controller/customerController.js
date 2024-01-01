@@ -179,11 +179,71 @@ const deleteCustomerByID = async (req, res) => {
     });
 };
 
+const getCustomerByID = async (req, res) => {
+  const id = req.params.id; 
+  const sql = "SELECT * FROM customer c join account a on c.account_id = a.account_id where c.account_id = ?";
+  const values = [id];
+  db.query(sql, values, (err, result) => {
+      if (err) {
+      return res
+          .status(500)
+          .json({ Error: "Error fetching user ID" });
+      }
+      return res.status(200).json({ Status: "Success", Account: result });
+  });
+};
+
+
+const UpdateCustomerByID2 = async (req, res) => {
+  const id = req.params.id;
+  const updatedData = req.body;
+
+ // Constructing SET clause dynamically
+const setClause = Object.keys(updatedData).map(key => `${key} = ?`).join(', ');
+
+// Assuming you have a 'customer' table in your database
+const sql = `UPDATE customer SET ${setClause} WHERE account_id = ?`;
+
+// Creating an array of values in the correct order
+const values = [...Object.values(updatedData), id];
+
+// Log the SQL query and values for debugging
+console.log('SQL Query:', sql);
+console.log('Values:', values);
+
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error updating customer:', err);
+      res.status(500).json({ error: 'Failed to update customer' });
+    } else {
+      console.log('Customer updated successfully');
+      res.status(200).json({ message: 'Customer updated successfully' });
+    }
+  });
+};
+
+const getCustomerByID1 = async (req, res) => {
+  const id = req.params.id; 
+  const sql = "SELECT * FROM customer where account_id = ?";
+  const values = [id];
+  db.query(sql, values, (err, result) => {
+      if (err) {
+      return res
+          .status(500)
+          .json({ Error: "Error fetching user ID" });
+      }
+      return res.status(200).json({ Status: "Success", Customer: result });
+  });
+};
+
 module.exports = {
     getFullNameByIDCustomer,
     getAllCustomers,
     SearchUserByName,
     deleteCustomerByID,
     UpdateCustomerByID,
-    InsertCustomer
+    InsertCustomer,
+    getCustomerByID,
+    UpdateCustomerByID2,
+    getCustomerByID1
 };

@@ -188,7 +188,7 @@ function ViewUser() {
 
   return (
     <section className="contentP">
-      <div className='text1'>Manage User <Link to="/homepageEmployee/viewUser/addUser"><span style={{ fontSize: '0.8em' }}><FontAwesomeIcon icon={faUserPlus} /></span></Link> </div>
+      <div className='text1'>Manage Customer</div>
       <div className='containerP'>
         <div className='employeeList'>
           <div className='Filter'>
@@ -211,7 +211,7 @@ function ViewUser() {
 
           </div>
 
-          <div className='text2'>List of employees</div>
+          <div className='text2'>List of customers</div>
 
           <table className='employeeList1'>
             <thead>
@@ -226,8 +226,6 @@ function ViewUser() {
                 <th>role</th>
                 <th>email</th>
                 <th>password</th>
-                <th className='delete'>Actions</th>
-                <th>Delete</th>
               </tr>
             </thead>
 
@@ -241,33 +239,18 @@ function ViewUser() {
                     <td>{item.citizen_identification_card}</td>
                     <td>{item.fullname}</td>
                     <td>
-                      <input
-                        type="phone"
-                        value={item.phone}
-                        onChange={(e) => handlePhoneChange(e, item.customer_id)}
-                        className="input-phone"
-                      />  
+  
+
+                      {item.phone}
+
+
                     </td>
                     <td>{item.gender}</td>
                     <td>{item.dob}</td>
                     <td>{item.role}</td>
                     <td>{item.email}</td>
                     <td>{item.password}</td>
-                         <td className='delete'>
-                  {editMode === item.customer_id ? (
-                    <>
-                      <button onClick={() => handleUpdate(item.customer_id)}>Confirm</button>
-                      <button onClick={handleCancel}>Cancel</button>
-                    </>
-                  ) : (
-                    <button onClick={() => setEditMode(item.customer_id)}>Update</button>
-                  )}
-                </td>
-                    <td className='delete'>
-                    <button onClick={() => handleDelete(item.customer_id, item.fullname, item.account_id)}>
-  Delete
-</button>
-                    </td>
+                        
                   </tr>
 
                 ))

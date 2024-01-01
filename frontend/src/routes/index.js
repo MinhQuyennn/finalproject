@@ -8,13 +8,19 @@ import ViewProfile from "../component/Page/ManagerPage/ViewProfile/ViewProfile";
 import ViewUser from '../component/Page/EmployeePage/ViewUser';
 import EmployeePage from "../component/Page/EmployeePage/EmployeePage";
 import AddUser from '../component/Page/EmployeePage/AddUser';
+import ViewProfileC from "../component/Page/CustomerPage/viewProfile";
+
 
 export const publicRoutes = [
   { path: "/", element: <Login /> },
   { path: "/signup", element: <Signup /> },
 ];
 
-export const CustomerRoutes = [{ path: "/home", element: <CustomerPage /> }];
+export const CustomerRoutes = [
+  { path: "/home", element: <CustomerPage /> },
+  { path: "/home/viewProfile/:id", element: <ViewProfileC /> },
+
+];
 
 export const ManagerRoutes = [
   { path: "/homepageManager", element: <ManagerPage /> },

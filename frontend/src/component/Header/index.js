@@ -126,7 +126,7 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/home/viewProfile">
+            <Link to="/home/viewProfile/${accountID}">
               View Profile
             </Link>
           </li>

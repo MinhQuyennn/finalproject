@@ -13,7 +13,7 @@ import {
   CustomerRoutes,
 } from "./routes/index";
 
-// import Footer from './component/Footer';
+import Footer from './component/Footer';
 import Header from "./component/Header";
 import Loader from "./component/Loader/Loader";
 import ForgotPassword from "./component/Page/Password/ForgotPassword";
@@ -102,6 +102,7 @@ const App = () => {
             element={<BookingDetail />}
           />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
