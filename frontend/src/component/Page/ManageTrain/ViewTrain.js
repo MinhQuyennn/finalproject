@@ -1,0 +1,126 @@
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { ListOfTrain, SearchTrain } from "../../../services/manageTrain"; // Update this path
+
+function ViewUser() {
+  const [trainData, setTrainData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const fetchData = async () => {
+    try {
+      const response = await ListOfTrain();
+      console.log("Train Data:", response.data);
+
+      // Assuming your train data is an array and you want to use it in the component
+      setTrainData(response.data);
+    } catch (error) {
+      // Handle the error, e.g., display an error message to the user
+      console.error("Error fetching train data:", error);
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      const response = await SearchTrain(encodeURIComponent(searchTerm.trim()));
+      console.log("Search Train API response:", response);
+
+      // Access the data property in the response
+      const searchData = response.data;
+
+      // You can perform any additional actions with the search response if needed
+      setTrainData(searchData.list); // Update the train data with the search results
+    } catch (error) {
+      console.error("Error searching for train: ", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch train data when the component mounts
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    // Automatically trigger search when searchTerm changes
+    if (searchTerm.trim() !== "") {
+      handleSearch();
+    }
+  }, [searchTerm]);
+
+  return (
+    <section className="contentP">
+      <div className="text1">Manage Train </div>
+
+      <div className="containerP">
+        <div className="employeeList">
+          <div className="Filter">
+            <div className="filter1"></div>
+
+            <div className="filter2">
+              <form
+                className="example"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  console.log("Form submitted!");
+                  // Automatically trigger search on form submission
+                  handleSearch();
+                }}
+              >
+                <input
+                  type="text"
+                  placeholder="Enter train name.."
+                  name="search"
+                  className="ip"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </form>
+            </div>
+          </div>
+          <table className="employeeList1">
+            <thead>
+              <tr>
+                <th>Train id</th>
+                <th>Train name</th>
+                <th>Total seat</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {trainData !== undefined && trainData.length > 0 ? (
+                trainData.map((item) => (
+                  <tr key={item.train_id}>
+                    <td>{item.train_id}</td>
+                    <td>{item.train_name}</td>
+                    <td>{item.total_seat_of_one_train}</td>
+                    <td>
+                      <Link
+                        to={`/homepageEmployee/Train/viewtraindetail/${item.train_id}`}
+                      >
+                        <button style={{ width: "50%", marginLeft: "15%" }}>
+                          View
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">
+                    {trainData.length === 0
+                      ? "Loading..."
+                      : "No data available"}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default ViewUser;

@@ -1,0 +1,84 @@
+import React, { useState } from "react";
+import style from "./style.css";
+import { faRoute } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import * as RouteService from "../../../services/manageroute";
+import { useNavigate } from "react-router-dom";
+
+function AddRoute() {
+  const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const routeData = {
+        departure_date: formData.departureDate,
+        departure_time: formData.departureTime,
+        // Add other route-related fields as needed
+      };
+
+      const response = await RouteService.AddNewRoute(routeData);
+
+      console.log("New route created:", response);
+      // Show toast notification on success
+      toast.success("Route added successfully");
+
+      // Use useNavigate for programmatic navigation
+      navigate("/homepageEmployee/Route");
+    } catch (error) {
+      console.error("Error creating route:", error);
+    }
+  };
+
+  return (
+    <div>
+      <ToastContainer />
+
+      <section className="contentP">
+        <div className="text1">
+          Add Route{" "}
+          <span style={{ fontSize: "0.8em" }}>
+            <FontAwesomeIcon icon={faRoute} />
+          </span>
+        </div>
+        <div className="containerP">
+          <div className="employeeList">
+            <form onSubmit={handleFormSubmit}>
+              <label>Departure Date:</label>
+              <input
+                type="date"
+                name="departureDate"
+                onChange={handleInputChange}
+                value={formData.departureDate}
+                required
+              />
+
+              <label>Departure Time:</label>
+              <input
+                type="time"
+                name="departureTime"
+                onChange={handleInputChange}
+                value={formData.departureTime}
+                required
+              />
+
+              {/* Add other route-related fields as needed */}
+
+              <button type="submit">Add Route</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+export default AddRoute;
