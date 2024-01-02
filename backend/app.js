@@ -12,6 +12,7 @@ const manageTrainRoute = require("./routes/managetrain");
 const manageRouteRoute = require("./routes/manageroute");
 const manageStation = require("./routes/managestation.js");
 const manageTrip = require("./routes/managetrip.js");
+const manageTicket = require("./routes/manageticket.js");
 
 const { verifyToken } = require("./middleware/authMiddleware");
 
@@ -48,6 +49,7 @@ app.use("/api", manageTrainRoute);
 app.use("/api", manageRouteRoute);
 app.use("/api", manageStation);
 app.use("/api", manageTrip);
+app.use("/api", manageTicket);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running on port ${port}`);
