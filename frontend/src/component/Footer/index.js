@@ -10,7 +10,7 @@ function Footer(){
     return (
         <div className={cx('footer')}>
         <div className={cx('copyright')}>
-            <p>2024 Booking Train Ticker, All Rights Reversed.</p>
+            <p>2024 Booking Train Ticket, All Rights Reversed.</p>
         </div>
 
         <div>

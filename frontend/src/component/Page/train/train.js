@@ -17,12 +17,8 @@ function Train() {
     localStorage.setItem("selectedRouteId", routeId);
     localStorage.setItem("selectedTrainId", trainId);
     localStorage.setItem("selectedTrainPrice", price);
-<<<<<<< HEAD
-  }; 
-=======
     localStorage.setItem("selectedStationId", stationId);
   };
->>>>>>> c5b24e4 (commit change)
 
   useEffect(() => {
     const fetchData = async () => {

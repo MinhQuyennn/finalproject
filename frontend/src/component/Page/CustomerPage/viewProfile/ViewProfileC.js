@@ -101,9 +101,12 @@ function ViewProfileC() {
                   <input type="text" name="phone" value={updatedData.phone || ''} onChange={handleInputChange} />
                 </label>
                 <label>
-                  Gender:
-                  <input type="text" name="gender" value={updatedData.gender || ''} onChange={handleInputChange} />
-                </label>
+  Gender:
+  <select name="gender" value={updatedData.gender || ''} onChange={handleInputChange}>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+</label>
                 <label>
                   Date of Birth:
                   <input type="date" name="dob" value={updatedData.dob || ''} onChange={handleInputChange} />
