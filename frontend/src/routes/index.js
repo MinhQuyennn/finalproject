@@ -14,7 +14,14 @@ import ViewTrainById from "../component/Page/ManageTrain/ViewTrainDetail";
 import ListOfRoute from "../component/Page/ManageRoute/ListOfRoute";
 import ViewRouteById from "../component/Page/ManageRoute/Viewroutedetail";
 import AddRoute from "../component/Page/ManageRoute/AddRoute";
+<<<<<<< HEAD
 import ViewProfileC from "../component/Page/CustomerPage/viewProfile";
+=======
+import ViewStaion from "../component/Page/ManageStation/ViewStation";
+import AddStation from "../component/Page/ManageStation/AddStation";
+import ListOfTrip from "../component/Page/ManageTrip/ListOfTrip";
+import AddTrip from "../component/Page/ManageTrip/AddTrip";
+>>>>>>> c5b24e4 (commit change)
 
 export const publicRoutes = [
   { path: "/", element: <Login /> },
@@ -55,4 +62,8 @@ export const EmployeeRoutes = [
     element: <ViewRouteById />,
   },
   { path: "/homepageEmployee/Route/addroute", element: <AddRoute /> },
+  { path: "/homepageEmployee/Station", element: <ViewStaion /> },
+  { path: "/homepageEmployee/AddStation/addstation", element: <AddStation /> },
+  { path: "/homepageEmployee/Trip", element: <ListOfTrip /> },
+  { path: "/homepageEmployee/Trip/addtrip", element: <AddTrip /> },
 ];

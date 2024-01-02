@@ -4,7 +4,7 @@ import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { ListOfTrain, SearchTrain } from "../../../services/manageTrain"; // Update this path
 
-function ViewUser() {
+function ViewTrain() {
   const [trainData, setTrainData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -123,4 +123,4 @@ function ViewUser() {
   );
 }
 
-export default ViewUser;
+export default ViewTrain;

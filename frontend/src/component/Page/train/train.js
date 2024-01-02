@@ -13,11 +13,16 @@ function Train() {
   const arrival = segments[segments.length - 2];
   const { departure_date } = useParams();
 
-  const handleSelect = (routeId, trainId, price) => {
+  const handleSelect = (routeId, trainId, price, stationId) => {
     localStorage.setItem("selectedRouteId", routeId);
     localStorage.setItem("selectedTrainId", trainId);
     localStorage.setItem("selectedTrainPrice", price);
+<<<<<<< HEAD
   }; 
+=======
+    localStorage.setItem("selectedStationId", stationId);
+  };
+>>>>>>> c5b24e4 (commit change)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,6 +79,7 @@ function Train() {
                   <div className="train-content">
                     <div className="train__id">
                       <p>Train ID: {train.train_id}</p>
+                      <p>Station ID: {train.station_id}</p>
                     </div>
                     <div className="train__info">
                       <p>Train Name: {train.train_name}</p>
@@ -98,7 +104,8 @@ function Train() {
                           handleSelect(
                             train.route_id,
                             train.train_id,
-                            train.price
+                            train.price,
+                            train.station_id
                           )
                         }
                         className="btn__train"

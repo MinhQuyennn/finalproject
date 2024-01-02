@@ -3,6 +3,7 @@ const db = require("../config/database");
 const createBooking = (req, res) => {
   const {
     customer_id,
+    station_id,
     route_id,
     train_id,
     seat_id,
@@ -18,6 +19,7 @@ const createBooking = (req, res) => {
 
   if (
     !customer_id ||
+    !station_id ||
     !route_id ||
     !train_id ||
     !seat_id ||
@@ -48,6 +50,7 @@ const createBooking = (req, res) => {
   const sql = `
     INSERT INTO booking (
       customer_id,
+      station_id,
       route_id,
       train_id,
       seat_id,
@@ -59,11 +62,12 @@ const createBooking = (req, res) => {
       passenger_full_name,
       passenger_citizen_identification_card,
       passenger_phonenumber
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
   `;
 
   const values = [
     customer_id,
+    station_id,
     route_id,
     train_id,
     seat_id,
@@ -127,6 +131,7 @@ const getBookingById = (req, res) => {
 
     const {
       booking_id,
+      station_id,
       train_id,
       route_id,
       seat_id,
@@ -134,11 +139,13 @@ const getBookingById = (req, res) => {
       passenger_full_name,
       passenger_citizen_identification_card,
       passenger_phonenumber,
-      selected_seat_price, // Make sure to define this if needed
+      selected_seat_price,
+      total_price,
     } = booking;
 
     const response = {
       booking_id,
+      station_id,
       train_id,
       route_id,
       seat_id,
@@ -148,6 +155,7 @@ const getBookingById = (req, res) => {
       passenger_citizen_identification_card,
       passenger_phonenumber,
       selected_seat_price,
+      total_price,
     };
 
     return res.status(200).json(response);

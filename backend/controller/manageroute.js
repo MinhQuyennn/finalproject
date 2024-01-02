@@ -21,7 +21,7 @@ const getAll = async (req, res) => {
       departure_time: row.departure_time,
     }));
 
-    return res.status(200).json(route); // No need to wrap in an object
+    return res.status(200).json(route);
   });
 };
 

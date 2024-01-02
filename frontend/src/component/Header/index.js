@@ -173,6 +173,12 @@ View Profile
             <Link to="/homepageEmployee/Route">Route</Link>
           </li>
           <li>
+            <Link to="/homepageEmployee/Station">Station</Link>
+          </li>
+          <li>
+            <Link to="/homepageEmployee/Trip">Trip</Link>
+          </li>
+          <li>
             <Link to="/homepageEmployee/viewUser">View User</Link>
           </li>
         </ul>

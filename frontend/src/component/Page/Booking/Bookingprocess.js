@@ -92,6 +92,7 @@ const CarriageComponent = () => {
       train_id: localStorage.getItem("selectedTrainId"),
       seat_id: localStorage.getItem("selectedSeatId"),
       carriage_id: localStorage.getItem("selectedCarriageId"),
+      station_id: localStorage.getItem("selectedStationId"), // Include station_id
       booking_date: new Date().toISOString().split("T")[0],
       payment_method: "Online",
       payment_status: "Not yet",

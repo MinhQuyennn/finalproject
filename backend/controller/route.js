@@ -4,7 +4,7 @@ const { format } = require("date-fns");
 
 const getAll = (req, res) => {
   const sql = `
-    SELECT tr.route_id, departure_station, arrival_station
+    SELECT st.station_id, tr.route_id, departure_station, arrival_station
     FROM station s
     JOIN stationroute st ON s.station_id = st.station_id
     JOIN route r ON r.route_id = st.route_id
@@ -67,7 +67,7 @@ const searchstation = (req, res) => {
     console.log("Decoded arrival station name: ", decodedArrivalName);
 
     const sql = `
-      SELECT tr.route_id, t.train_id, t.train_name, t.total_seat_of_one_train,
+      SELECT st.station_id, tr.route_id, t.train_id, t.train_name, t.total_seat_of_one_train,
       departure_station, arrival_station, r.departure_date, r.departure_time, price
       FROM station s
       JOIN stationroute st ON s.station_id = st.station_id
@@ -97,6 +97,7 @@ const searchstation = (req, res) => {
         }
 
         const list = result.map((row) => ({
+          station_id: row.station_id,
           route_id: row.route_id,
           train_id: row.train_id,
           train_name: row.train_name,
