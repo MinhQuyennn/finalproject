@@ -34,7 +34,7 @@ function AddStation() {
       toast.success("Route added successfully");
 
       // Use useNavigate for programmatic navigation
-      navigate("/homepageEmployee/Staion");
+      navigate("/homepageEmployee/Station");
     } catch (error) {
       console.error("Error creating route:", error);
     }
@@ -46,7 +46,7 @@ function AddStation() {
 
       <section className="contentP">
         <div className="text1">
-          Add Route{" "}
+          Add Station{" "}
           <span style={{ fontSize: "0.8em" }}>
             <FontAwesomeIcon icon={faRoute} />
           </span>

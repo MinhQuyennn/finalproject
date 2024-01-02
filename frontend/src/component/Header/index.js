@@ -110,11 +110,7 @@ function Header() {
             <Link to="/home/viewBooking">View Booking</Link>
           </li>
           <li>
-
-<Link to="/home/viewProfile/${accountID}">
-View Profile
-</Link>
-
+            <Link to="/home/viewProfile/${accountID}">View Profile</Link>
           </li>
           <li>
             <Link to="/home/contactUs">Contact Us</Link>
@@ -177,6 +173,9 @@ View Profile
           </li>
           <li>
             <Link to="/homepageEmployee/Trip">Trip</Link>
+          </li>
+          <li>
+            <Link to="/homepageEmployee/Ticket">Ticket</Link>
           </li>
           <li>
             <Link to="/homepageEmployee/viewUser">View User</Link>

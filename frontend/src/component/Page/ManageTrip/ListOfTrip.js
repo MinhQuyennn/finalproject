@@ -7,14 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function ManageListOfTrip() {
   const [tripData, setTripData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20); // Adjust the number of items per page as needed
+  const [itemsPerPage] = useState(20);
 
   const fetchData = async () => {
     try {
       const response = await ListOfTrip();
       console.log("Trip Data:", response.data);
 
-      // Check if response.data.trips is an array
       if (Array.isArray(response.data.trips)) {
         setTripData(response.data.trips);
       } else {
@@ -29,15 +28,37 @@ function ManageListOfTrip() {
     fetchData();
   }, []);
 
-  // Calculate the index of the last item to display
-  const indexOfLastItem = currentPage * itemsPerPage;
-  // Calculate the index of the first item to display
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // Get the current items to display
-  const currentItems = tripData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalItems = tripData.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxDisplayedPages = 5;
+
+    for (
+      let i = Math.max(1, currentPage - 2);
+      i <= Math.min(totalPages, currentPage + 2);
+      i++
+    ) {
+      pageNumbers.push(
+        <li
+          style={{ marginLeft: "1%" }}
+          key={i}
+          className={currentPage === i ? "active" : ""}
+        >
+          <button onClick={() => paginate(i)}>{i}</button>
+        </li>
+      );
+    }
+
+    return pageNumbers;
+  };
 
   return (
     <section className="contentP">
@@ -67,89 +88,55 @@ function ManageListOfTrip() {
             </thead>
 
             <tbody>
-              {currentItems.map((item) => (
-                <tr key={item.train_id}>
-                  <td>{item.train_id}</td>
-                  <td>{item.route_id}</td>
-                  <td>{item.station_id}</td>
-                  <td>{item.departure_station}</td>
-                  <td>{item.arrival_station}</td>
-                  <td>{item.departure_time}</td>
-                  <td>{item.breaktime}</td>
-                  <td>{item.arrival_time_expected}</td>
-                </tr>
-              ))}
+              {tripData
+                .slice(
+                  (currentPage - 1) * itemsPerPage,
+                  currentPage * itemsPerPage
+                )
+                .map((item) => (
+                  <tr key={item.train_id}>
+                    <td>{item.train_id}</td>
+                    <td>{item.route_id}</td>
+                    <td>{item.station_id}</td>
+                    <td>{item.departure_station}</td>
+                    <td>{item.arrival_station}</td>
+                    <td>{item.departure_time}</td>
+                    <td>{item.breaktime}</td>
+                    <td>{item.arrival_time_expected}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
 
           {/* Pagination */}
-          <div>
-            {tripData.length > itemsPerPage && (
-              <ul
-                className="pagination"
-                style={{
-                  display: "flex",
-                  paddingLeft: "35%",
-                  paddingTop: "2%",
-                }}
-              >
-                {/* Display "..." if there are more than 5 pages and currentPage is not within the first three pages */}
-                {tripData.length > 5 && currentPage > 3 && (
-                  <li style={{ marginLeft: "1%" }}>...</li>
-                )}
+          {totalItems > itemsPerPage && (
+            <ul
+              className="pagination"
+              style={{
+                display: "flex",
+                paddingLeft: "35%",
+                paddingTop: "2%",
+              }}
+            >
+              {/* Display "Previous" button */}
+              <li style={{ marginLeft: "1%" }}>
+                <button onClick={() => paginate(currentPage - 1)}>Prev</button>
+              </li>
 
-                {/* Display page numbers in the range of (currentPage - 2) to (currentPage + 2) */}
-                {Array.from(
-                  {
-                    length: Math.min(
-                      5,
-                      Math.ceil(tripData.length / itemsPerPage)
-                    ),
-                  },
-                  (_, i) => {
-                    const pageNumber =
-                      currentPage > 2 ? currentPage - 2 + i : i + 1;
-                    return (
-                      <li
-                        style={{ marginLeft: "1%" }}
-                        key={pageNumber}
-                        className={currentPage === pageNumber ? "active" : ""}
-                      >
-                        <button onClick={() => paginate(pageNumber)}>
-                          {pageNumber}
-                        </button>
-                      </li>
-                    );
-                  }
-                )}
+              {currentPage > 3 && <li style={{ marginLeft: "1%" }}>...</li>}
 
-                {/* Display "..." if there are more than 5 pages and currentPage is not within the last three pages */}
-                {tripData.length > 5 &&
-                  currentPage <
-                    Math.ceil(tripData.length / itemsPerPage) - 2 && (
-                    <li style={{ marginLeft: "1%" }}>...</li>
-                  )}
+              {renderPageNumbers()}
 
-                {/* Display last page button */}
-                <li
-                  style={{ marginLeft: "1%" }}
-                  className={
-                    currentPage === Math.ceil(tripData.length / itemsPerPage)
-                      ? "active"
-                      : ""
-                  }
-                >
-                  <button
-                    onClick={() =>
-                      paginate(Math.ceil(tripData.length / itemsPerPage))
-                    }
-                  >
-                    {Math.ceil(tripData.length / itemsPerPage)}
-                  </button>
-                </li>
-              </ul>
-            )}
-          </div>
+              {currentPage < totalPages - 2 && (
+                <li style={{ marginLeft: "1%" }}>...</li>
+              )}
+
+              {/* Display "Next" button */}
+              <li style={{ marginLeft: "1%" }}>
+                <button onClick={() => paginate(currentPage + 1)}>Next</button>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </section>

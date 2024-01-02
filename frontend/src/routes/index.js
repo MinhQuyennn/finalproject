@@ -20,6 +20,7 @@ import AddStation from "../component/Page/ManageStation/AddStation";
 import ListOfTrip from "../component/Page/ManageTrip/ListOfTrip";
 import AddTrip from "../component/Page/ManageTrip/AddTrip";
 import ManageTicket from "../component/Page/ManageTicket/ManageTicket";
+import Route from "../component/Page/searchRoute/Route";
 
 export const publicRoutes = [
   { path: "/", element: <Login /> },
@@ -29,6 +30,7 @@ export const publicRoutes = [
 export const CustomerRoutes = [
   { path: "/home", element: <CustomerPage /> },
   { path: "/home/viewProfile/:id", element: <ViewProfileC /> },
+  { path: "/home/route", element: <Route /> },
 ];
 
 export const ManagerRoutes = [

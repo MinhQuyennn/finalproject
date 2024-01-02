@@ -52,25 +52,27 @@ function AddRoute() {
         <div className="containerP">
           <div className="employeeList">
             <form onSubmit={handleFormSubmit}>
-              <label>Departure Date:</label>
-              <input
-                type="date"
-                name="departureDate"
-                onChange={handleInputChange}
-                value={formData.departureDate}
-                required
-              />
-
-              <label>Departure Time:</label>
-              <input
-                type="time"
-                name="departureTime"
-                onChange={handleInputChange}
-                value={formData.departureTime}
-                required
-              />
-
-              {/* Add other route-related fields as needed */}
+              <div style={{ marginTop: "2%" }}>
+                <label>Departure Date:</label>
+                <input
+                  type="date"
+                  name="departureDate"
+                  onChange={handleInputChange}
+                  value={formData.departureDate}
+                  required
+                />
+              </div>
+              <p></p>
+              <div style={{ marginTop: "2%" }}>
+                <label>Departure Time:</label>
+                <input
+                  type="time"
+                  name="departureTime"
+                  onChange={handleInputChange}
+                  value={formData.departureTime}
+                  required
+                />
+              </div>
 
               <button type="submit">Add Route</button>
             </form>

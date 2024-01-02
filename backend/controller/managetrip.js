@@ -150,6 +150,7 @@ const AddNewTrip = async (req, res) => {
         .execute(existingStationRouteSql, [route_id, station_id]);
 
       if (existingStationRoute.length > 0) {
+        // If the station is already assigned to the specified route, return an error
         return res
           .status(400)
           .json({ message: "Station already assigned to the specified route" });
