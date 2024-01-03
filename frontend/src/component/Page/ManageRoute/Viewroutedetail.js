@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import * as ManageRouteFunction from "../../../services/manageroute"; // Assuming you have a service file for managing routes
+import * as ManageRouteFunction from "../../../services/manageroute";
 import { useParams } from "react-router-dom";
 import style from "./style.css";
 
@@ -17,7 +17,7 @@ function ViewRouteById() {
           response.data.result &&
           response.data.result.length > 0
         ) {
-          setRouteData(response.data.result[0]); // Assuming you expect a single result
+          setRouteData(response.data.result[0]);
         } else {
           console.error("API error: No data found for the given route ID");
         }

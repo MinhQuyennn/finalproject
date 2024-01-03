@@ -51,7 +51,7 @@ function ViewBooking() {
       .then((response) => response.json())
       .then((apiData) => {
         console.log("API Response:", apiData);
-        setData(apiData); // Assuming the API response directly provides booking data
+        setData(apiData);
       })
       .catch((error) => console.error("Error fetching data:", error));
   };

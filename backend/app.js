@@ -32,10 +32,8 @@ const port = process.env.PORT || 8888;
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-// Config template engine
 configViewEngine(app);
 
-// define all our routes
 app.use("/", accountRoutes);
 app.use("/", verifyToken, authRoutes);
 app.use("/", verifyToken, customerRoutes);

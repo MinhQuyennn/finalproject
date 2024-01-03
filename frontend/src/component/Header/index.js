@@ -22,11 +22,9 @@ function Header() {
   };
 
   const handleLogout = () => {
-    // Perform logout actions here
-    // For example, clear local storage and navigate to '/'
     localStorage.removeItem("accountID");
     localStorage.removeItem("currentRole");
-    window.location.href = "/"; // Redirect to the home page after logout
+    window.location.href = "/";
   };
 
   const handleOverlayClick = (e) => {
@@ -44,7 +42,6 @@ function Header() {
         const currentRole = localStorage.getItem("currentRole");
         let endpoint = "";
 
-        // Determine the API endpoint based on the user's role
         if (currentRole === "customer") {
           endpoint = `/getFullNameByIDCustomer/${accountID}`;
         } else if (currentRole === "manager") {
@@ -58,17 +55,15 @@ function Header() {
         if (response.ok) {
           const data = await response.json();
 
-          // Log the entire response and data
           console.log("Response:", response);
           console.log("Data:", data);
 
-          // Check if data.Manager exists and is not empty
           if (data.Manager && data.Manager.length > 0) {
-            setFullName(data.Manager[0].fullname); // Use 'fullname' instead of 'full_name'
+            setFullName(data.Manager[0].fullname);
           } else if (data.Employee && data.Employee.length > 0) {
-            setFullName(data.Employee[0].fullname); // Use 'fullname' instead of 'full_name'
+            setFullName(data.Employee[0].fullname);
           } else if (data.Customer && data.Customer.length > 0) {
-            setFullName(data.Customer[0].fullname); // Use 'fullname' instead of 'full_name'
+            setFullName(data.Customer[0].fullname);
           } else {
             console.warn("Full name not found for the user.");
           }
@@ -104,7 +99,7 @@ function Header() {
 
         <ul className={`navlist ${isMenuOpen ? "active" : ""}`}>
           <li>
-            <Link to="/home">Home</Link>
+            <Link to="/route">Home</Link>
           </li>
           <li>
             <Link to="/home/viewBooking">View Booking</Link>

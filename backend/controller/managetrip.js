@@ -106,7 +106,6 @@ const AddNewTrip = async (req, res) => {
     const { train_id, route_id } = req.body.second;
     const stationData = req.body.first_and_half;
 
-    // Check if the train exists
     const existingTrainSql = `SELECT * FROM train WHERE train_id = ?`;
     const [existingTrain] = await db
       .promise()
@@ -116,7 +115,6 @@ const AddNewTrip = async (req, res) => {
       return res.status(400).json({ message: "Train does not exist" });
     }
 
-    // Check if the route exists, if not, insert it
     const existingRouteSql = `SELECT * FROM route WHERE route_id = ?`;
     const [existingRoute] = await db
       .promise()
@@ -127,7 +125,6 @@ const AddNewTrip = async (req, res) => {
       await db.promise().execute(newRouteSql, [route_id]);
     }
 
-    // Check if train-route association exists, if not, insert it
     const existingTrainRouteSql = `SELECT * FROM trainroute WHERE train_id = ? AND route_id = ?`;
     const [existingTrainRoute] = await db
       .promise()
@@ -138,25 +135,21 @@ const AddNewTrip = async (req, res) => {
       await db.promise().execute(trainRouteSql, [train_id, route_id]);
     }
 
-    // Insert each station into the stationroute table
     for (const station of stationData) {
       const { route_id, station_id, arrival_time_expected, breaktime } =
         station;
 
-      // Check if the station-route association already exists
       const existingStationRouteSql = `SELECT * FROM stationroute WHERE route_id = ? AND station_id = ?`;
       const [existingStationRoute] = await db
         .promise()
         .execute(existingStationRouteSql, [route_id, station_id]);
 
       if (existingStationRoute.length > 0) {
-        // If the station is already assigned to the specified route, return an error
         return res
           .status(400)
           .json({ message: "Station already assigned to the specified route" });
       }
 
-      // Insert the station into stationroute table
       const stationRouteSql = `INSERT INTO stationroute (route_id, station_id, arrival_time_expected, breaktime) VALUES (?, ?, ?, ?)`;
       await db
         .promise()

@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function ViewRoutes() {
   const [routeData, setRouteData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10); // Adjust the number of items per page as needed
-
+  const [itemsPerPage] = useState(10);
   const fetchData = async () => {
     try {
       const response = await ListOfRoutes();
@@ -23,11 +22,8 @@ function ViewRoutes() {
     fetchData();
   }, []);
 
-  // Calculate the index of the last item to display
   const indexOfLastItem = currentPage * itemsPerPage;
-  // Calculate the index of the first item to display
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // Get the current items to display
   const currentItems = routeData.slice(indexOfFirstItem, indexOfLastItem);
 
   // Change page
@@ -76,7 +72,6 @@ function ViewRoutes() {
             </tbody>
           </table>
 
-          {/* Pagination */}
           <div>
             {routeData.length > itemsPerPage && (
               <ul

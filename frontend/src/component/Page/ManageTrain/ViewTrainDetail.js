@@ -17,7 +17,7 @@ function ViewTrainById() {
           response.data.result &&
           response.data.result.length > 0
         ) {
-          setTrainData(response.data.result[0]); // Assuming you expect a single result
+          setTrainData(response.data.result[0]);
         } else {
           console.error("API error: No data found for the given train ID");
         }

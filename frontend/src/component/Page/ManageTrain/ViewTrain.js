@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { ListOfTrain, SearchTrain } from "../../../services/manageTrain"; // Update this path
-
+import { ListOfTrain, SearchTrain } from "../../../services/manageTrain";
 function ViewTrain() {
   const [trainData, setTrainData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,10 +12,8 @@ function ViewTrain() {
       const response = await ListOfTrain();
       console.log("Train Data:", response.data);
 
-      // Assuming your train data is an array and you want to use it in the component
       setTrainData(response.data);
     } catch (error) {
-      // Handle the error, e.g., display an error message to the user
       console.error("Error fetching train data:", error);
     }
   };
@@ -26,23 +23,19 @@ function ViewTrain() {
       const response = await SearchTrain(encodeURIComponent(searchTerm.trim()));
       console.log("Search Train API response:", response);
 
-      // Access the data property in the response
       const searchData = response.data;
 
-      // You can perform any additional actions with the search response if needed
-      setTrainData(searchData.list); // Update the train data with the search results
+      setTrainData(searchData.list);
     } catch (error) {
       console.error("Error searching for train: ", error);
     }
   };
 
   useEffect(() => {
-    // Fetch train data when the component mounts
     fetchData();
   }, []);
 
   useEffect(() => {
-    // Automatically trigger search when searchTerm changes
     if (searchTerm.trim() !== "") {
       handleSearch();
     }
@@ -63,7 +56,6 @@ function ViewTrain() {
                 onSubmit={(e) => {
                   e.preventDefault();
                   console.log("Form submitted!");
-                  // Automatically trigger search on form submission
                   handleSearch();
                 }}
               >

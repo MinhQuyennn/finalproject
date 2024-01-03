@@ -22,16 +22,13 @@ function AddRoute() {
       const routeData = {
         departure_date: formData.departureDate,
         departure_time: formData.departureTime,
-        // Add other route-related fields as needed
       };
 
       const response = await RouteService.AddNewRoute(routeData);
 
       console.log("New route created:", response);
-      // Show toast notification on success
       toast.success("Route added successfully");
 
-      // Use useNavigate for programmatic navigation
       navigate("/homepageEmployee/Route");
     } catch (error) {
       console.error("Error creating route:", error);

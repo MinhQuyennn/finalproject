@@ -108,7 +108,6 @@ function ManageListOfTrip() {
             </tbody>
           </table>
 
-          {/* Pagination */}
           {totalItems > itemsPerPage && (
             <ul
               className="pagination"
@@ -118,7 +117,6 @@ function ManageListOfTrip() {
                 paddingTop: "2%",
               }}
             >
-              {/* Display "Previous" button */}
               <li style={{ marginLeft: "1%" }}>
                 <button onClick={() => paginate(currentPage - 1)}>Prev</button>
               </li>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import * as TrainService from "../../../services/trainservices";
 import "./train.css";
 import DirectionsTransitFilledIcon from "@mui/icons-material/DirectionsTransitFilled";
@@ -12,12 +12,26 @@ function Train() {
   const departure = segments[segments.length - 3];
   const arrival = segments[segments.length - 2];
   const { departure_date } = useParams();
+  const navigate = useNavigate();
 
-  const handleSelect = (routeId, trainId, price, stationId) => {
-    localStorage.setItem("selectedRouteId", routeId);
-    localStorage.setItem("selectedTrainId", trainId);
-    localStorage.setItem("selectedTrainPrice", price);
-    localStorage.setItem("selectedStationId", stationId);
+  const isDepartureTimeValid = (departureTime) => {
+    const currentDateTime = new Date().toLocaleString("en-US", {
+      timeZone: "Asia/Ho_Chi_Minh",
+    });
+
+    return departureTime >= currentDateTime;
+  };
+
+  const handleSelect = (routeId, trainId, price, stationId, departureTime) => {
+    if (isDepartureTimeValid(departureTime)) {
+      localStorage.setItem("selectedRouteId", routeId);
+      localStorage.setItem("selectedTrainId", trainId);
+      localStorage.setItem("selectedTrainPrice", price);
+      localStorage.setItem("selectedStationId", stationId);
+    } else {
+      alert("Invalid - Departure time is in the past");
+      navigate(`/route`);
+    }
   };
 
   useEffect(() => {
@@ -89,26 +103,34 @@ function Train() {
                       {train.arrival_date && (
                         <p>Arrival Date: {train.arrival_date}</p>
                       )}
-                      <p>Departure Time: {train.departure_time}</p>
+                      {train.departure_time && (
+                        <p>
+                          Departure Time: {train.departure_time}{" "}
+                          {!isDepartureTimeValid(train.departure_time) && (
+                            <span style={{ color: "red" }}>
+                              (Invalid - in the past)
+                            </span>
+                          )}
+                        </p>
+                      )}
                       <p>Price: {train.price}</p>
                     </div>
                   </div>
                   <div>
-                    <Link to={`/bookingprocess/${train.train_id}`}>
-                      <button
-                        onClick={() =>
-                          handleSelect(
-                            train.route_id,
-                            train.train_id,
-                            train.price,
-                            train.station_id
-                          )
-                        }
-                        className="btn__train"
-                      >
-                        <DirectionsTransitFilledIcon /> BOOKING
-                      </button>
-                    </Link>
+                    <button
+                      onClick={() =>
+                        handleSelect(
+                          train.route_id,
+                          train.train_id,
+                          train.price,
+                          train.station_id,
+                          train.departure_time
+                        )
+                      }
+                      className="btn__train"
+                    >
+                      <DirectionsTransitFilledIcon /> BOOKING
+                    </button>
                   </div>
                 </div>
               ))

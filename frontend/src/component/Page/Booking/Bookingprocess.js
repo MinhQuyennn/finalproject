@@ -67,7 +67,7 @@ const CarriageComponent = () => {
       case "CHOOSING":
         return { backgroundColor: "yellow", color: "black" };
       default:
-        return {}; // Default style
+        return {};
     }
   };
 
@@ -92,7 +92,7 @@ const CarriageComponent = () => {
       train_id: localStorage.getItem("selectedTrainId"),
       seat_id: localStorage.getItem("selectedSeatId"),
       carriage_id: localStorage.getItem("selectedCarriageId"),
-      station_id: localStorage.getItem("selectedStationId"), // Include station_id
+      station_id: localStorage.getItem("selectedStationId"),
       booking_date: new Date().toISOString().split("T")[0],
       payment_method: "Online",
       payment_status: "Not yet",
@@ -114,7 +114,6 @@ const CarriageComponent = () => {
       window.location.href = `/bookingdetail/${bookingId}`;
     } catch (error) {
       console.error("Error submitting booking:", error);
-      // Handle the error...
     }
   };
 

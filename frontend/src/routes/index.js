@@ -28,7 +28,7 @@ export const publicRoutes = [
 ];
 
 export const CustomerRoutes = [
-  { path: "/home", element: <CustomerPage /> },
+  { path: "/route", element: <Route /> },
   { path: "/home/viewProfile/:id", element: <ViewProfileC /> },
   { path: "/home/route", element: <Route /> },
 ];

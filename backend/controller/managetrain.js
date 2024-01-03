@@ -21,7 +21,7 @@ const getAll = async (req, res) => {
       total_seat_of_one_train: row.total_seat_of_one_train,
     }));
 
-    return res.status(200).json(trains); // No need to wrap in an object
+    return res.status(200).json(trains);
   });
 };
 

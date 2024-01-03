@@ -1,6 +1,5 @@
 const db = require("../config/database");
 
-// Get all carriages for a specific train
 const getAllCarriages = (req, res) => {
   try {
     const train_id = req.params.train_id;
@@ -87,7 +86,7 @@ const getAllSeatsForCarriage = (req, res) => {
           // Check if the seat is booked for the specified route
           if (bookedSeatIds.includes(seat.seat_id)) {
             seat.status = "Is booked";
-            seat.availableSeats = 0; // Booked seats are not available
+            seat.availableSeats = 0;
           } else {
             seat.status = "Available";
             seat.availableSeats = seat.total_seat_of_one_route;

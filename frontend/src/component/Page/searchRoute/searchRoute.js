@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./searchRoute.css"; // Make sure the correct path is provided for your CSS file
+import "./searchRoute.css";
 import * as routeservice from "../../../services/routeservice";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
@@ -12,6 +12,18 @@ function SearchRoute() {
   const [departureDate, setDepartureDate] = useState("");
   const [filteredDepartures, setFilteredDepartures] = useState([]);
   const [filteredArrivals, setFilteredArrivals] = useState([]);
+
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    let month = currentDate.getMonth() + 1;
+    let day = currentDate.getDate();
+
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+
+    return `${year}-${month}-${day}`;
+  };
 
   const onChangeDeparture = (event) => {
     const searchTerm = event.target.value.toLowerCase();
@@ -36,8 +48,15 @@ function SearchRoute() {
   };
 
   const onChangeDate = (event) => {
-    const dateValue = event.target.value;
-    setDepartureDate(dateValue);
+    const currentDate = new Date();
+    const selectedDate = new Date(event.target.value);
+
+    if (selectedDate < currentDate + 1) {
+      alert("Selected date cannot be in the past");
+      setDepartureDate("");
+    } else {
+      setDepartureDate(event.target.value);
+    }
   };
 
   const filterDepartures = (searchTerm) => {
@@ -90,14 +109,10 @@ function SearchRoute() {
 
       if (!response || !response.routes) {
         console.error("API error: No routes in the response");
-        // Handle the error...
         return;
       }
-
-      // Process the modified data structure...
     } catch (error) {
       console.error("Error searching for route:", error);
-      // Handle the error...
     }
   };
 
@@ -210,7 +225,8 @@ function SearchRoute() {
                 name="dob"
                 value={departureDate}
                 onChange={onChangeDate}
-                placeholder="Date of Birth"
+                placeholder="Departure Date"
+                min={getCurrentDate()}
               />
             </Form.Group>
           </div>

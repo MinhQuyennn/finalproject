@@ -37,15 +37,12 @@ const createBooking = (req, res) => {
     });
   }
 
-  // Convert booking_date to a Date object and format it in UTC+7
   const bookingDateUTC = new Date(booking_date);
   bookingDateUTC.setHours(bookingDateUTC.getHours() + 7);
   const year = bookingDateUTC.getFullYear();
   const month = String(bookingDateUTC.getMonth() + 1).padStart(2, "0");
   const day = String(bookingDateUTC.getDate()).padStart(2, "0");
   const formattedBookingDate = `${year}-${month}-${day}`;
-
-  // Perform additional validation as needed
 
   const sql = `
     INSERT INTO booking (
@@ -94,7 +91,7 @@ const createBooking = (req, res) => {
     return res.status(201).json({
       message: "Booking created successfully",
       booking_id: bookingId,
-      booking_date: formattedBookingDate, // Include booking_date in the response
+      booking_date: formattedBookingDate,
     });
   });
 };
@@ -121,7 +118,6 @@ const getBookingById = (req, res) => {
 
     const booking = result[0];
 
-    // Convert booking_date to a Date object and format it in UTC+7
     const bookingDateUTC = new Date(booking.booking_date);
     bookingDateUTC.setHours(bookingDateUTC.getHours() + 7);
     const year = bookingDateUTC.getFullYear();
@@ -150,7 +146,7 @@ const getBookingById = (req, res) => {
       route_id,
       seat_id,
       carriage_id,
-      booking_date: formattedBookingDate, // Use formattedBookingDate instead of booking_date
+      booking_date: formattedBookingDate,
       passenger_full_name,
       passenger_citizen_identification_card,
       passenger_phonenumber,

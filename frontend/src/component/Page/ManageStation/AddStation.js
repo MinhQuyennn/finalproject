@@ -24,16 +24,13 @@ function AddStation() {
         arrival_station: formData.arrival_station,
         price: formData.price,
         distance: formData.distance,
-        // Add other route-related fields as needed
       };
 
       const response = await managestaion.addStation(station);
 
       console.log("New route created:", response);
-      // Show toast notification on success
       toast.success("Route added successfully");
 
-      // Use useNavigate for programmatic navigation
       navigate("/homepageEmployee/Station");
     } catch (error) {
       console.error("Error creating route:", error);

@@ -13,7 +13,6 @@ function Bookingdetail() {
         setBookingData(data);
       } catch (error) {
         console.error("Error fetching booking details:", error);
-        // Handle the error...
       }
     };
 

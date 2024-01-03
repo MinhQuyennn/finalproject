@@ -10,8 +10,8 @@ function ViewUser() {
   const [data, setData] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [editMode, setEditMode] = useState(null); // Track the user under edit
-  const [editedUserData, setEditedUserData] = useState({}); // Store edited data
+  const [editMode, setEditMode] = useState(null);
+  const [editedUserData, setEditedUserData] = useState({});
 
   const navigate = useNavigate();
 
@@ -24,15 +24,15 @@ function ViewUser() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(editedUserData), // Send edited data
+          body: JSON.stringify(editedUserData),
         }
       );
 
       if (response.ok) {
         const data = await response.json();
         console.log("Updated customer:", data);
-        setEditMode(null); // Exit edit mode after successful update
-        fetchData(); // Refresh data after update
+        setEditMode(null);
+        fetchData();
         alert("Updated successfully");
       } else {
         throw new Error("Failed to update customer");
@@ -44,8 +44,8 @@ function ViewUser() {
   };
 
   const handleCancel = () => {
-    setEditedUserData({}); // Clear edited data
-    setEditMode(null); // Exit edit mode
+    setEditedUserData({});
+    setEditMode(null);
   };
 
   const fetchData = () => {
@@ -63,7 +63,7 @@ function ViewUser() {
       .then((response) => response.json())
       .then((apiData) => {
         console.log("API ResponseF:", apiData);
-        setData(apiData.CustomersInformation); // Ensure data is an array
+        setData(apiData.CustomersInformation);
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
@@ -94,7 +94,6 @@ function ViewUser() {
   };
 
   const handleQuitStatus = (id) => {
-    // Make a request to update the Status status to 'Work'
     const isConfirmed = window.confirm(
       "Are you sure you want to change the status to `work`?"
     );
@@ -136,7 +135,6 @@ function ViewUser() {
         if (response.ok) {
           const data = await response.json();
           console.log("Deleted customer and associated account:", data);
-          // Refresh data after deletion
           fetchData();
           alert("Deleted successfully");
         } else {
@@ -169,11 +167,9 @@ function ViewUser() {
       const result = await response.json();
 
       if (result.Status) {
-        // Successful update
         console.log(result.Status);
-        fetchData(); // Refresh employee data after update
+        fetchData();
       } else {
-        // Record not found
         console.log(result.Error);
       }
     } catch (error) {
@@ -193,14 +189,11 @@ function ViewUser() {
 
   return (
     <section className="contentP">
-
-<div className='text1'>Manage Customer</div>
-<div className='containerP'>
-  <div className='employeeList'>
-    <div className='Filter'>
-      <div className='filter1'>
-  
-      </div>
+      <div className="text1">Manage Customer</div>
+      <div className="containerP">
+        <div className="employeeList">
+          <div className="Filter">
+            <div className="filter1"></div>
 
             <div className="filter2">
               <form
@@ -223,8 +216,8 @@ function ViewUser() {
             </div>
           </div>
 
-<div className='text2'>List of customers</div>          
-<table className="employeeList1">
+          <div className="text2">List of customers</div>
+          <table className="employeeList1">
             <thead>
               <tr>
                 <th>Customer id</th>
@@ -237,7 +230,6 @@ function ViewUser() {
                 <th>role</th>
                 <th>email</th>
                 <th>password</th>
-
               </tr>
             </thead>
 
@@ -249,16 +241,12 @@ function ViewUser() {
                     <td>{item.account_id}</td>
                     <td>{item.citizen_identification_card}</td>
                     <td>{item.fullname}</td>
-                    <td>
-
-{item.phone}
-                    </td>
+                    <td>{item.phone}</td>
                     <td>{item.gender}</td>
                     <td>{item.dob}</td>
                     <td>{item.role}</td>
                     <td>{item.email}</td>
                     <td>{item.password}</td>
-
                   </tr>
                 ))
               ) : (
@@ -274,7 +262,6 @@ function ViewUser() {
       </div>
     </section>
   );
-  
 }
 
 export default ViewUser;

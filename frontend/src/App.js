@@ -13,12 +13,11 @@ import {
   CustomerRoutes,
 } from "./routes/index";
 
-import Footer from './component/Footer';
+import Footer from "./component/Footer";
 import Header from "./component/Header";
 import Loader from "./component/Loader/Loader";
 import ForgotPassword from "./component/Page/Password/ForgotPassword";
 import ResetPassword from "./component/Page/Password/ResetPassword";
-import SearchRoute from "./component/Page/searchRoute/Route";
 import Train from "./component/Page/train/train";
 import Bookingprocess from "./component/Page/Booking/Bookingprocess";
 import BookingDetail from "./component/Page/Booking/Bookingdetail";
@@ -88,7 +87,6 @@ const App = () => {
           ))}
           <Route path="/forgotten-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/route" element={<SearchRoute />} />
           <Route
             path="/train/:departure_station/:arrival_station/:departure_date"
             element={<Train />}

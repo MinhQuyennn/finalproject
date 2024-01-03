@@ -106,7 +106,7 @@ function AddTrip() {
     setStationData((prevStationData) => [
       ...prevStationData,
       {
-        stationId: "", // Set default or leave it empty
+        stationId: "",
         arrivalTime: "",
         breakTime: "",
       },
@@ -156,7 +156,6 @@ function AddTrip() {
         error.response.data &&
         error.response.data.message
       ) {
-        // Check for the specific error message from the server
         if (
           error.response.data.message ===
           "Station already assigned to the specified route"
