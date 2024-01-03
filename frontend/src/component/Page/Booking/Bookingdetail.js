@@ -198,11 +198,12 @@ function Bookingdetail() {
                   }
                 }}
                 createOrder={(data, actions) => {
+                  const totalPriceDivided = (bookingData.total_price / 22).toFixed(2); // Calculate the value
                   return actions.order.create({
                     purchase_units: [
                       {
                         amount: {
-                          value: bookingData.total_price,
+                          value: totalPriceDivided,
                         },
                       },
                     ],
