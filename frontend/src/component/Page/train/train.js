@@ -14,20 +14,59 @@ function Train() {
   const { departure_date } = useParams();
   const navigate = useNavigate();
 
-  const isDepartureTimeValid = (departureTime) => {
-    const currentDateTime = new Date().toLocaleString("en-US", {
-      timeZone: "Asia/Ho_Chi_Minh",
-    });
+  const isDepartureTimeValid = (departureDate, departureTime) => {
+    const currentDateTime = new Date();
 
-    return departureTime >= currentDateTime;
+    // Check if departureDate and departureTime are defined
+    if (!departureDate || !departureTime) {
+      console.error("Invalid departure date or time");
+      return false;
+    }
+
+    // Convert departureDate to a Date object
+    const [year, month, day] = departureDate.split("-");
+    const departureDateTime = new Date(
+      parseInt(year, 10),
+      parseInt(month, 10) - 1,
+      parseInt(day, 10),
+      departureTime.includes(":")
+        ? parseInt(departureTime.split(":")[0], 10)
+        : 0,
+      departureTime.includes(":")
+        ? parseInt(departureTime.split(":")[1], 10)
+        : 0,
+      0
+    );
+
+    // Set the timezone for both currentDateTime and departureDateTime
+    const currentDateTimeFormatted = new Date(
+      currentDateTime.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" })
+    );
+    const departureDateTimeFormatted = new Date(
+      departureDateTime.toLocaleString("en-US", {
+        timeZone: "Asia/Ho_Chi_Minh",
+      })
+    );
+
+    // Log the formatted date and time for debugging
+    console.log("Current DateTime:", currentDateTimeFormatted);
+    console.log("Departure DateTime:", departureDateTimeFormatted);
+
+    // Compare both date and time
+    console.log(
+      "Comparison result:",
+      departureDateTimeFormatted >= currentDateTimeFormatted
+    );
+    return departureDateTimeFormatted >= currentDateTimeFormatted;
   };
 
   const handleSelect = (routeId, trainId, price, stationId, departureTime) => {
-    if (isDepartureTimeValid(departureTime)) {
+    if (isDepartureTimeValid(departure_date, departureTime)) {
       localStorage.setItem("selectedRouteId", routeId);
       localStorage.setItem("selectedTrainId", trainId);
       localStorage.setItem("selectedTrainPrice", price);
       localStorage.setItem("selectedStationId", stationId);
+      navigate(`/bookingprocess/${trainId}`);
     } else {
       alert("Invalid - Departure time is in the past");
       navigate(`/route`);
@@ -106,7 +145,10 @@ function Train() {
                       {train.departure_time && (
                         <p>
                           Departure Time: {train.departure_time}{" "}
-                          {!isDepartureTimeValid(train.departure_time) && (
+                          {!isDepartureTimeValid(
+                            train.departure_date,
+                            train.departure_time
+                          ) && (
                             <span style={{ color: "red" }}>
                               (Invalid - in the past)
                             </span>
