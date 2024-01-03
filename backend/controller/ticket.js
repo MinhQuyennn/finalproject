@@ -217,8 +217,8 @@ const createTicketAPI = async (req, res) => {
   }
 };
 
-const deleteTicketByBookingId = async (req, res) => {
-  const booking_id = req.params.booking_id; // Get the booking ID from the request parameters
+const UpdateTicketByBookingId = async (req, res) => {
+  const booking_id = req.params.booking_id;
 
   let connection;
   try {
@@ -227,28 +227,26 @@ const deleteTicketByBookingId = async (req, res) => {
     }
 
     connection = await pool.getConnection();
-    await connection.beginTransaction(); // Begin transaction
+    await connection.beginTransaction();
 
-    // Delete ticket based on the provided booking ID
-    await connection.query("DELETE FROM ticket WHERE booking_id = ?", [
-      booking_id,
-    ]);
+    // Update ticket status to 'Cancel successful'
+    const updateQuery = "UPDATE ticket SET status = 'Cancel successful' WHERE booking_id = ?";
+    const [updateResult] = await connection.execute(updateQuery, [booking_id]);
 
     // Commit the transaction after deletion
     await connection.commit();
 
-    res.status(200).json({ message: "Ticket deleted successfully" });
+    await connection.commit();
+    res.status(200).json({ message: "Ticket cancellation successful" });
   } catch (err) {
     if (connection) {
-      await connection.rollback(); // Rollback the transaction if an error occurs
+      await connection.rollback();
     }
-    console.error("Error deleting ticket:", err);
-    res
-      .status(500)
-      .json({ message: "Failed to delete ticket. Please try again later." });
+    console.error("Error canceling ticket:", err);
+    res.status(500).json({ message: "Failed to cancel ticket. Please try again later." });
   } finally {
     if (connection) {
-      connection.release(); // Release the connection back to the pool
+      connection.release();
     }
   }
 };
@@ -256,5 +254,5 @@ const deleteTicketByBookingId = async (req, res) => {
 module.exports = {
   TicketInformationByCustomerID,
   createTicketAPI,
-  deleteTicketByBookingId,
+  UpdateTicketByBookingId,
 };

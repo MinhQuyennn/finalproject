@@ -32,7 +32,7 @@ function ViewUser() {
       const response = await fetch(
         `http://localhost:8081/api/ticket/${bookingId}`,
         {
-          method: "DELETE",
+          method: "PUT",
         }
       );
       if (response.ok) {

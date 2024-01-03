@@ -7,6 +7,6 @@ router.get(
   ticketController.TicketInformationByCustomerID
 );
 router.post("/ticket", ticketController.createTicketAPI);
-router.delete("/ticket/:booking_id", ticketController.deleteTicketByBookingId);
+router.put("/ticket/:booking_id", ticketController.UpdateTicketByBookingId);
 
 module.exports = router;
