@@ -106,6 +106,53 @@ const TicketInformationByCustomerID = async (req, res) => {
   }
 };
 
+const TicketInformationByBookingID = async (req, res) => {
+  const booking_id = req.params.booking_id; // Assuming the booking ID is passed in the route parameters
+  let connection;
+  try {
+    if (!booking_id) {
+      return res.status(400).json({ message: "Booking ID is required" });
+    }
+
+    connection = await pool.getConnection();
+    await connection.beginTransaction(); // Begin transaction
+
+    const [result] = await connection.query(
+      "SELECT t.* FROM ticket t JOIN booking b ON t.booking_id = b.booking_id  WHERE t.booking_id = ?",
+      [booking_id]
+    );
+    if (result.length === 0) {
+      res.status(404).json({ message: "Ticket not found" });
+      return;
+    }
+
+    const ticketData = result[0]; // Assuming only one ticket is fetched based on the booking ID
+
+    // Instead of generating PDF, send the ticket data as JSON
+    res.status(200).json(ticketData);
+
+    await connection.commit(); // Commit the transaction
+  } catch (err) {
+    if (connection) {
+      await connection.rollback(); // Rollback the transaction if an error occurs
+    }
+    console.error("Error fetching ticket details", err);
+    res
+      .status(500)
+      .json({
+        message: "Failed to fetch ticket details. Please try again later.",
+      });
+  } finally {
+    if (connection) {
+      connection.release(); // Release the connection back to the pool
+    }
+  }
+};
+
+module.exports = { TicketInformationByBookingID };
+
+
+
 const createTicketAPI = async (req, res) => {
   let connection; // Declare connection variable here
 
@@ -233,8 +280,11 @@ const UpdateTicketByBookingId = async (req, res) => {
     const updateQuery = "UPDATE ticket SET status = 'Cancel successful' WHERE booking_id = ?";
     const [updateResult] = await connection.execute(updateQuery, [booking_id]);
 
-    // Commit the transaction after deletion
-    await connection.commit();
+    if (updateResult.affectedRows === 0) {
+      // If no rows were affected, it means the ticket doesn't exist
+      await connection.rollback();
+      return res.status(404).json({ message: "Ticket not found" });
+    }
 
     await connection.commit();
     res.status(200).json({ message: "Ticket cancellation successful" });
@@ -255,4 +305,5 @@ module.exports = {
   TicketInformationByCustomerID,
   createTicketAPI,
   UpdateTicketByBookingId,
+  TicketInformationByBookingID
 };

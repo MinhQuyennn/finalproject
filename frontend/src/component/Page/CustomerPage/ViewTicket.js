@@ -28,38 +28,41 @@ function ViewUser() {
   };
 
   const handleDeleteTicket = async (bookingId) => {
+    
     try {
-      const response = await fetch(
-        `http://localhost:8081/api/ticket/${bookingId}`,
-        {
-          method: "PUT",
-        }
-      );
-      if (response.ok) {
-        const ticketData = await response.json();
-        const departureDate = new Date(ticketData.departure_date);
-
-        const currentDate = new Date();
-        const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
-        const differenceInDays = Math.round(
-          (departureDate - currentDate) / oneDay
-        );
-        console.log(differenceInDays);
-        if (differenceInDays < 1) {
-          toast.error(
-            `Cancel failed. It's over the allowed time to cancel this ticket.`
-          );
-          return; // Cancel deletion due to time constraint
-        }
-
-        // Implement deletion logic here...
-
-        toast.success(`Ticket ${bookingId} deleted successfully`);
-        fetchTicketHistory(); // Fetch updated ticket history after deletion
-        window.location.reload(); // Refresh the page after deletion
-      } else {
-        throw new Error(`Failed to fetch ticket ${bookingId}`);
+      const response1 = await fetch(`http://localhost:8081/api/ticket/book/${bookingId}`, {
+        method: 'GET',
+      });
+      const ticketData = await response1.json();
+      console.log(ticketData);
+      const departureDate = new Date(ticketData.departure_date);
+      console.log(departureDate);
+      const currentDate = new Date();
+      console.log(currentDate);
+      const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+      const differenceInDays = Math.round((departureDate - currentDate) / oneDay);
+      console.log(differenceInDays);
+      if (differenceInDays < 1) {
+        toast.error(`Cancel failed. It's over the allowed time to cancel this ticket.`);
+        return; // Cancel deletion due to time constraint
       }
+else { 
+  const response = await fetch(
+  `http://localhost:8081/api/ticket/${bookingId}`,
+  {
+    method: "PUT",
+  }
+);
+if (response.ok) {
+
+  // Implement deletion logic here...
+
+  toast.success(`Ticket ${bookingId} deleted successfully`);
+  fetchTicketHistory(); // Fetch updated ticket history after deletion
+} else {
+  throw new Error(`Failed to fetch ticket ${bookingId}`);
+}}
+     
     } catch (error) {
       console.error(`Error deleting ticket ${bookingId}:`, error);
     }
