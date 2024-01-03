@@ -1,0 +1,82 @@
+.contentP {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .text1 {
+    color: var(--main-color);
+    font-size: 28px;
+  }
+  
+  .containerP {
+    margin-top: 20px;
+  }
+  
+  .ticketHistoryTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .ticketHistoryTable th,
+  .ticketHistoryTable td {
+    border-top: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .ticketHistoryTable tbody tr:hover {
+    background-color: #f1d8ca63;
+  }
+  
+  .ticketHistoryTable td {
+    max-width: 150px; /* Adjust the maximum width as needed */
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  /* Media query for responsiveness */
+  @media screen and (max-width: 600px) {
+    .ticketHistoryTable {
+      overflow-x: auto;
+      display: block;
+    }
+  
+    .ticketHistoryTable thead,
+    .ticketHistoryTable tbody,
+    .ticketHistoryTable th,
+    .ticketHistoryTable td {
+      display: block;
+      width: auto;
+      table-layout: auto;
+    }
+  
+    .ticketHistoryTable thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+  
+    .ticketHistoryTable tr {
+      margin-bottom: 15px;
+    }
+  
+    .ticketHistoryTable td {
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-left: 50%;
+      text-align: left;
+    }
+  
+    .ticketHistoryTable td:before {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      content: attr(data-label);
+    }
+  }
+  

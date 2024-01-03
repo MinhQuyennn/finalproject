@@ -102,7 +102,7 @@ function Header() {
             <Link to="/route">Home</Link>
           </li>
           <li>
-            <Link to="/home/viewBooking">View Booking</Link>
+            <Link to="/home/viewTicket">View Ticket History</Link>
           </li>
           <li>
             <Link to="/home/viewProfile/${accountID}">View Profile</Link>

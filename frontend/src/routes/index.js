@@ -7,7 +7,7 @@ import AddEmployee from "../component/Page/ManagerPage/ViewEmployee/addEmployee/
 import ViewProfile from "../component/Page/ManagerPage/ViewProfile/ViewProfile";
 import ViewUser from "../component/Page/EmployeePage/ViewUser";
 import EmployeePage from "../component/Page/EmployeePage/EmployeePage";
-
+import ContactUs from "../component/Page/CustomerPage/ContactUs/ContactUs";
 import AddUser from "../component/Page/EmployeePage/AddUser";
 import ViewTrain from "../component/Page/ManageTrain/ViewTrain";
 import ViewTrainById from "../component/Page/ManageTrain/ViewTrainDetail";
@@ -21,6 +21,7 @@ import ListOfTrip from "../component/Page/ManageTrip/ListOfTrip";
 import AddTrip from "../component/Page/ManageTrip/AddTrip";
 import ManageTicket from "../component/Page/ManageTicket/ManageTicket";
 import Route from "../component/Page/searchRoute/Route";
+import ViewTicket from "../component/Page/CustomerPage/ViewTicket";
 
 export const publicRoutes = [
   { path: "/", element: <Login /> },
@@ -31,6 +32,8 @@ export const CustomerRoutes = [
   { path: "/route", element: <Route /> },
   { path: "/home/viewProfile/:id", element: <ViewProfileC /> },
   { path: "/home/route", element: <Route /> },
+  { path: "/home/viewTicket", element: <ViewTicket /> },
+  { path: "/home/contactUs", element: <ContactUs /> },
 ];
 
 export const ManagerRoutes = [

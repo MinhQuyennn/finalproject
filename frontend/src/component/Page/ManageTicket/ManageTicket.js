@@ -81,7 +81,6 @@ function ViewBooking() {
                 <th>Passenger citizenidentification</th>
                 <th>Passenger phonenumber</th>
                 <th>Passenger method</th>
-                <th>Payment status</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -103,7 +102,6 @@ function ViewBooking() {
                     <td>{item.passenger_citizen_identification_card}</td>
                     <td>{item.passenger_phonenumber}</td>
                     <td>{item.payment_method}</td>
-                    <td>{item.payment_status}</td>
                     <td>{item.status}</td>
                   </tr>
                 ))
